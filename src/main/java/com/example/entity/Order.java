@@ -2,7 +2,6 @@ package com.example.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,34 +27,32 @@ public class Order implements Serializable {
 	private Long id;
 	@Temporal(TemporalType.DATE)
 	private Date orderDate;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Customer customer;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Employee employee;
 	@Temporal(TemporalType.DATE)
 	private Date shippedDate;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Shipper shipper;
 	private String shipName;
 	private String shipAddress;
 	private String shipCity;
 	private String shipRegion;
 	private String shipPostalCode;
 	private String shipCountry;
-	@OneToMany(mappedBy = "order")
-	private List<Payment> payments;
+	@OneToOne(mappedBy = "order")
+	private Payment payment;
 	@ManyToMany
-	@JoinTable(name = "orderDetail", joinColumns = {
-			@JoinColumn(name = "order_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "product_id", referencedColumnName = "id") })
+	@JoinTable(name = "orderDetail", joinColumns = { @JoinColumn(referencedColumnName = "id") }, inverseJoinColumns = {
+			@JoinColumn(referencedColumnName = "id") })
 	private Set<Product> products;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Shipper shipper;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Customer customer;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Employee employee;
 
 	public Order() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Set<Product> getProducts() {
@@ -71,12 +68,12 @@ public class Order implements Serializable {
 		this.products = products;
 	}
 
-	public List<Payment> getPayments() {
-		return payments;
+	public Payment getPayment() {
+		return payment;
 	}
 
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	public Long getId() {

@@ -2,11 +2,14 @@ package com.example.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,6 +24,8 @@ public class Employee implements Serializable {
 	private Integer id;
 	private String lastName;
 	private String firstName;
+	private String password;
+	private Boolean isActive;
 	private String title;
 	@Temporal(value = TemporalType.DATE)
 	private Date birthDay;
@@ -34,9 +39,35 @@ public class Employee implements Serializable {
 	private String photo;
 	private String reportsTo;
 	private String notes;
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Order> orders;
 
 	public Employee() {
 		super();
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	public Integer getId() {

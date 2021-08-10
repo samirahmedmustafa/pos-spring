@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,20 +21,17 @@ public class Product implements Serializable {
 	private Long id;
 	private String name;
 	private String nameAr;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Supplier supplier;
 	private Integer price;
 	private String img;
 	private String quantityPerUnit;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
-	@ManyToMany
-	@JoinTable(name = "orderDetail", joinColumns = {
-			@JoinColumn(name = "product_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "order_id", referencedColumnName = "id") })
+	@ManyToMany(mappedBy = "products")
 	private Set<Order> orders;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Supplier supplier;
 
 	public void addOrder(Order order) {
 		orders.add(order);

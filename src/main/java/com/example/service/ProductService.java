@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.Product;
-import com.example.exception.ProductNotFoundException;
+import com.example.exception.ItemNotFoundException;
+import com.example.repository.ProductRepo;
 
 @Service
 @Transactional
@@ -25,7 +26,7 @@ public class ProductService {
 
 	public Product getProductById(Long id) {
 		Product product = productRepo.findById(id).orElseThrow(
-				() -> new ProductNotFoundException(String.format("Couldn't find product with the id %d", id)));
+				() -> new ItemNotFoundException(String.format("Couldn't find product with the id %d", id)));
 		return product;
 	}
 
@@ -36,7 +37,7 @@ public class ProductService {
 
 	public Product update(Product product, Long id) {
 		Product existingProduct = productRepo.findById(id).orElseThrow(
-				() -> new ProductNotFoundException(String.format("Couldn't find product with the id %d", id)));
+				() -> new ItemNotFoundException(String.format("Couldn't find product with the id %d", id)));
 		Product updatedProduct = updateProduct(existingProduct, product);
 		return productRepo.save(updatedProduct);
 	}
@@ -49,6 +50,11 @@ public class ProductService {
 		existingProduct.setImg(product.getImg());
 		existingProduct.setName(product.getName());
 		existingProduct.setPrice(product.getPrice());
+		existingProduct.setCategory(product.getCategory());
+		existingProduct.setNameAr(product.getNameAr());
+		existingProduct.setOrders(product.getOrders());
+		existingProduct.setQuantityPerUnit(product.getQuantityPerUnit());
+		existingProduct.setSupplier(product.getSupplier());
 		return existingProduct;
 	}
 
