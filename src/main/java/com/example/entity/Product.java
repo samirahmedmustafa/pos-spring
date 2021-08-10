@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "products")
 public class Product implements Serializable {
@@ -27,6 +29,7 @@ public class Product implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
+	@JsonIgnore
 	@ManyToMany(mappedBy = "products")
 	private Set<Order> orders;
 	@ManyToOne
