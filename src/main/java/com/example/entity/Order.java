@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -11,16 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
- import javax.persistence.OneToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Order  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +32,8 @@ public class Order implements Serializable {
 	private String shipRegion;
 	private String shipPostalCode;
 	private String shipCountry;
-	@OneToOne(mappedBy = "order")
+	@OneToOne
+	@JoinColumn(referencedColumnName = "id")
 	private Payment payment;
 	@ManyToMany
 	@JoinTable(name = "orderDetail", joinColumns = { @JoinColumn(referencedColumnName = "id") }, inverseJoinColumns = {

@@ -1,24 +1,25 @@
 package com.example.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "employees")
-public class Employee implements Serializable {
+public class Employee {
 
-	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -37,8 +38,11 @@ public class Employee implements Serializable {
 	private String region;
 	private String homePhone;
 	private String photo;
-	private String reportsTo;
+	@OneToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Employee reportsTo;
 	private String notes;
+	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Order> orders;
 
@@ -166,11 +170,11 @@ public class Employee implements Serializable {
 		this.photo = photo;
 	}
 
-	public String getReportsTo() {
+	public Employee getReportsTo() {
 		return reportsTo;
 	}
 
-	public void setReportsTo(String reportsTo) {
+	public void setReportsTo(Employee reportsTo) {
 		this.reportsTo = reportsTo;
 	}
 
