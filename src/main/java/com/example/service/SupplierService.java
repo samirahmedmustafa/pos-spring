@@ -50,7 +50,6 @@ public class SupplierService {
 		existingsupplier.setAddress(supplier.getAddress());
 		existingsupplier.setCity(supplier.getCity());
 		existingsupplier.setContact(supplier.getContact());
-		existingsupplier.setCity(supplier.getCity());
 		existingsupplier.setCountry(supplier.getCountry());
 		existingsupplier.setHomePage(supplier.getHomePage());
 		existingsupplier.setName(supplier.getName());
@@ -58,6 +57,7 @@ public class SupplierService {
 		existingsupplier.setPostalCode(supplier.getPostalCode());
 		existingsupplier.setRegion(supplier.getRegion());
 		existingsupplier.setTitle(supplier.getTitle());
+		existingsupplier.setProducts(supplier.getProducts());
 		return existingsupplier;
 	}
 

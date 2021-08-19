@@ -1,42 +1,75 @@
 package com.example.entity;
 
-import java.util.Set;
+import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
+	private String barCode;
 	private String nameAr;
-	private Integer price;
 	private String img;
 	private String quantityPerUnit;
+	private Long listPrice;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
 	@JsonIgnore
-	@ManyToMany(mappedBy = "products")
-	private Set<Order> orders;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
+	@OneToOne(mappedBy = "product")
+	private Inventory inventory;
+	@OneToMany(mappedBy = "product")
+	private List<OrderDetail> orderDetail;
 
-	public void addOrder(Order order) {
-		orders.add(order);
-		order.getProducts().add(this);
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
+
+	public Long getListPrice() {
+		return listPrice;
+	}
+
+	public void setListPrice(Long listPrice) {
+		this.listPrice = listPrice;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
+	public List<OrderDetail> getOrderDetail() {
+		return orderDetail;
+	}
+
+	public void setOrderDetail(List<OrderDetail> orderDetail) {
+		this.orderDetail = orderDetail;
 	}
 
 	public Category getCategory() {
@@ -45,14 +78,6 @@ public class Product {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public Set<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
 	}
 
 	public String getQuantityPerUnit() {
@@ -95,20 +120,16 @@ public class Product {
 		this.name = name;
 	}
 
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-
 	public String getImg() {
 		return img;
 	}
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public Product() {
+		super();
 	}
 
 }

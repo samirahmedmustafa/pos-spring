@@ -55,6 +55,7 @@ public class EmployeeService {
 		existingemployee.setBirthDay(employee.getBirthDay());
 		existingemployee.setFirstName(employee.getFirstName());
 		existingemployee.setLastName(employee.getLastName());
+		existingemployee.setEmail(employee.getEmail());
 		existingemployee.setPassword(employee.getPassword());
 		existingemployee.setNotes(employee.getNotes());
 		existingemployee.setIsActive(employee.getIsActive());

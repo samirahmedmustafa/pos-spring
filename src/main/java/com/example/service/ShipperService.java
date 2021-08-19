@@ -49,6 +49,7 @@ public class ShipperService {
 	private Shipper updateShipper(Shipper existingShipper, Shipper shipper) {
 		existingShipper.setName(shipper.getName());
 		existingShipper.setPhone(shipper.getPhone());
+		existingShipper.setOrders(shipper.getOrders());
 		return existingShipper;
 	}
 

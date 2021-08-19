@@ -1,7 +1,7 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,24 +12,24 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "statuses")
+public class Status implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
-	private String description;
 	@JsonIgnore
-	@OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
-	private List<Product> products;
+	@OneToMany(mappedBy = "status")
+	private List<OrderDetail> orderDetail;
 
-	public List<Product> getProducts() {
-		return products;
+	public List<OrderDetail> getOrderDetail() {
+		return orderDetail;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setOrderDetail(List<OrderDetail> orderDetail) {
+		this.orderDetail = orderDetail;
 	}
 
 	public Integer getId() {
@@ -48,15 +48,7 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Category() {
+	public Status() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

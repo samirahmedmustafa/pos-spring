@@ -1,24 +1,26 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "orders")
-public class Order  {
+public class Order implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -29,16 +31,15 @@ public class Order  {
 	private String shipName;
 	private String shipAddress;
 	private String shipCity;
+	@Transient
+	private Long totalAmount;
 	private String shipRegion;
 	private String shipPostalCode;
 	private String shipCountry;
-	@OneToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Payment payment;
-	@ManyToMany
-	@JoinTable(name = "orderDetail", joinColumns = { @JoinColumn(referencedColumnName = "id") }, inverseJoinColumns = {
-			@JoinColumn(referencedColumnName = "id") })
-	private Set<Product> products;
+	@OneToMany(mappedBy = "order")
+	private List<Payment> payment;
+	@OneToMany(mappedBy = "order")
+	private List<OrderDetail> orderDetail;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Shipper shipper;
@@ -49,28 +50,38 @@ public class Order  {
 	@JoinColumn(referencedColumnName = "id")
 	private Employee employee;
 
+	public List<OrderDetail> getOrderDetail() {
+		return orderDetail;
+	}
+
+	public void setOrderDetail(List<OrderDetail> orderDetail) {
+		this.orderDetail = orderDetail;
+	}
+
 	public Order() {
 		super();
 	}
 
-	public Set<Product> getProducts() {
-		return products;
+	public Long getTotalAmount() {
+		
+		totalAmount = (long) 0;
+		
+		this.getOrderDetail().stream().forEach(elem -> {
+			totalAmount += elem.getSubTotal();
+		});
+		
+		return totalAmount;
 	}
 
-	public void addProduct(Product product) {
-		products.add(product);
-		product.getOrders().add(this);
+	public void setTotalAmount(Long totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
-	public Payment getPayment() {
+	public List<Payment> getPayment() {
 		return payment;
 	}
 
-	public void setPayment(Payment payment) {
+	public void setPayment(List<Payment> payment) {
 		this.payment = payment;
 	}
 

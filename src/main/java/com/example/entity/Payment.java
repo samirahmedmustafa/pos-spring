@@ -1,12 +1,13 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,20 +16,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "payments")
-public class Payment {
+public class Payment implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@JsonIgnore
-	@OneToOne(mappedBy = "payment")
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private PaymentType paymentType;
 	private Long amount;
 
 	public Long getId() {
 		return id;
+	}
+
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
 	}
 
 	public void setId(Long id) {

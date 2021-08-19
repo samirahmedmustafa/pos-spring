@@ -21,36 +21,35 @@ import com.example.service.PaymentService;
 public class PaymentController {
 
 	@Autowired
-	private PaymentService PaymentService;
+	private PaymentService paymentService;
 	
 	@GetMapping
 	public ResponseEntity<List<Payment>> getPayments() {
-		System.out.println("get Payments");
-		List<Payment> payments = PaymentService.getPayments();
+		List<Payment> payments = paymentService.getPayments();
 		return new ResponseEntity<List<Payment>>(payments, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Payment> getPayment(@PathVariable Long id) {
-		Payment payment = PaymentService.getPaymentById(id);
+		Payment payment = paymentService.getPaymentById(id);
 		return new ResponseEntity<Payment>(payment, HttpStatus.OK);
 	}
 	
 	@PostMapping("")
 	public ResponseEntity<Payment> savePayment(@RequestBody Payment payment) {
-		Payment savedPayment = PaymentService.save(payment);
+		Payment savedPayment = paymentService.save(payment);
 		return new ResponseEntity<Payment>(savedPayment, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("{id}")
 	public ResponseEntity<Payment> updatePayment(@RequestBody Payment payment, @PathVariable Long id) {
-		Payment updatedPayment = PaymentService.update(payment, id);
+		Payment updatedPayment = paymentService.update(payment, id);
 		return new ResponseEntity<Payment>(updatedPayment, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> updatePayment(@PathVariable Long id) {
-		PaymentService.deleteById(id);
+		paymentService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

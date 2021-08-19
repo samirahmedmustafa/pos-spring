@@ -50,10 +50,11 @@ public class OrderService {
 		existingOrder.setCustomer(order.getCustomer());
 		existingOrder.setEmployee(order.getEmployee());
 		existingOrder.setOrderDate(order.getOrderDate());
+		existingOrder.setOrderDetail(order.getOrderDetail());
 		existingOrder.setPayment(order.getPayment());
-		existingOrder.setProducts(order.getProducts());
 		existingOrder.setShipAddress(order.getShipAddress());
 		existingOrder.setShipCity(order.getShipCity());
+		existingOrder.setTotalAmount(order.getTotalAmount());
 		existingOrder.setShipCountry(order.getShipCountry());
 		existingOrder.setShipName(order.getShipName());
 		existingOrder.setShippedDate(order.getShippedDate());

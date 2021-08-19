@@ -49,12 +49,14 @@ public class ProductService {
 	private Product updateProduct(Product existingProduct, Product product) {
 		existingProduct.setImg(product.getImg());
 		existingProduct.setName(product.getName());
-		existingProduct.setPrice(product.getPrice());
 		existingProduct.setCategory(product.getCategory());
 		existingProduct.setNameAr(product.getNameAr());
-		existingProduct.setOrders(product.getOrders());
+		existingProduct.setInventory(product.getInventory());
+		existingProduct.setListPrice(product.getListPrice());
+		existingProduct.setOrderDetail(product.getOrderDetail());
 		existingProduct.setQuantityPerUnit(product.getQuantityPerUnit());
 		existingProduct.setSupplier(product.getSupplier());
+		existingProduct.setBarCode(product.getBarCode());
 		return existingProduct;
 	}
 

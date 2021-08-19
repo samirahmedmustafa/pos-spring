@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,13 +19,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "employees")
-public class Employee {
+public class Employee implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String lastName;
 	private String firstName;
+	private String email;
 	private String password;
 	private Boolean isActive;
 	private String title;
@@ -48,6 +52,14 @@ public class Employee {
 
 	public Employee() {
 		super();
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
