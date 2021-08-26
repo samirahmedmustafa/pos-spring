@@ -15,9 +15,13 @@ public class PaymentType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	private Long name;
 	@OneToMany(mappedBy = "paymentType")
 	private List<InventoryPayment> inventoryPayments;
-	private Long name;
+	@OneToMany(mappedBy = "paymentType")
+	private List<OrderPayment> orderPayments;
+	@OneToMany(mappedBy = "paymentType")
+	private List<ExpensePayment> expensePayments;
 
 	public Integer getId() {
 		return id;

@@ -18,20 +18,20 @@ public class OrderDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private Integer quantity;
 	private Long unitPrice;
-	private Long quantity;
+	private Long discount;
 	@Transient
 	private Long subTotal;
-	private Long discount;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Product product;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Status status;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Product product;
 
 	public Long getSubTotal() {
 		subTotal = quantity * unitPrice;
@@ -74,11 +74,11 @@ public class OrderDetail implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
-	public Long getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Long quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

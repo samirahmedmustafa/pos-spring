@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "inventory_transactions")
-public class InventoryTransaction implements Serializable {
+@Table(name = "inventory_details")
+public class InventoryDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,9 +22,6 @@ public class InventoryTransaction implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private TransactionType transactionType;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Inventory inventory;
@@ -66,14 +63,6 @@ public class InventoryTransaction implements Serializable {
 		this.product = product;
 	}
 
-	public TransactionType getTransactionType() {
-		return transactionType;
-	}
-
-	public void setTransactionType(TransactionType transactionType) {
-		this.transactionType = transactionType;
-	}
-
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -90,7 +79,7 @@ public class InventoryTransaction implements Serializable {
 		this.id = id;
 	}
 
-	public InventoryTransaction() {
+	public InventoryDetail() {
 		super();
 	}
 

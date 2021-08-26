@@ -23,17 +23,17 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
-	private String barCode;
 	private String nameAr;
 	private String img;
+	private String barCode;
 	private String quantityPerUnit;
 	private Float vatPercentage;
 	@Transient
 	private Float vatValue;
-	private Double averageCost;
 	private Long sellPrice;
 	private Integer quantity;
 	private Long discount;
+	private Double averageCost;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
@@ -42,7 +42,7 @@ public class Product implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
 	@OneToMany(mappedBy = "product")
-	private List<InventoryTransaction> inventoryTransactions;
+	private List<InventoryDetail> inventoryDetails;
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetail;
 
@@ -71,8 +71,8 @@ public class Product implements Serializable {
 	}
 
 	public Float getVatValue() {
-		if(vatPercentage != null)
-			return (sellPrice * vatPercentage)/100;
+		if (vatPercentage != null)
+			return (sellPrice * vatPercentage) / 100;
 		return vatValue;
 	}
 
@@ -104,12 +104,12 @@ public class Product implements Serializable {
 		this.sellPrice = sellPrice;
 	}
 
-	public List<InventoryTransaction> getInventoryTransactions() {
-		return inventoryTransactions;
+	public List<InventoryDetail> getInventoryDetails() {
+		return inventoryDetails;
 	}
 
-	public void setInventoryTransactions(List<InventoryTransaction> inventoryTransactions) {
-		this.inventoryTransactions = inventoryTransactions;
+	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
+		this.inventoryDetails = inventoryDetails;
 	}
 
 	public List<OrderDetail> getOrderDetail() {

@@ -28,16 +28,8 @@ public class Order implements Serializable {
 	private Date orderDate;
 	@Temporal(TemporalType.DATE)
 	private Date shippedDate;
-	private String shipName;
-	private String shipAddress;
-	private String shipCity;
 	@Transient
 	private Long totalAmount;
-	private String shipRegion;
-	private String shipPostalCode;
-	private String shipCountry;
-	@OneToMany(mappedBy = "order")
-	private List<InventoryPayment> inventoryPayment;
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetail;
 	@ManyToOne
@@ -75,14 +67,6 @@ public class Order implements Serializable {
 
 	public void setTotalAmount(Long totalAmount) {
 		this.totalAmount = totalAmount;
-	}
-
-	public List<InventoryPayment> getPayment() {
-		return inventoryPayment;
-	}
-
-	public void setPayment(List<InventoryPayment> inventoryPayment) {
-		this.inventoryPayment = inventoryPayment;
 	}
 
 	public Long getId() {
@@ -131,54 +115,6 @@ public class Order implements Serializable {
 
 	public void setShipper(Shipper shipper) {
 		this.shipper = shipper;
-	}
-
-	public String getShipName() {
-		return shipName;
-	}
-
-	public void setShipName(String shipName) {
-		this.shipName = shipName;
-	}
-
-	public String getShipAddress() {
-		return shipAddress;
-	}
-
-	public void setShipAddress(String shipAddress) {
-		this.shipAddress = shipAddress;
-	}
-
-	public String getShipCity() {
-		return shipCity;
-	}
-
-	public void setShipCity(String shipCity) {
-		this.shipCity = shipCity;
-	}
-
-	public String getShipRegion() {
-		return shipRegion;
-	}
-
-	public void setShipRegion(String shipRegion) {
-		this.shipRegion = shipRegion;
-	}
-
-	public String getShipPostalCode() {
-		return shipPostalCode;
-	}
-
-	public void setShipPostalCode(String shipPostalCode) {
-		this.shipPostalCode = shipPostalCode;
-	}
-
-	public String getShipCountry() {
-		return shipCountry;
-	}
-
-	public void setShipCountry(String shipCountry) {
-		this.shipCountry = shipCountry;
 	}
 
 }

@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "inventory_transactions")
+@Table(name = "inventories")
 public class Inventory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,12 +24,12 @@ public class Inventory implements Serializable {
 	private Integer id;
 	@Transient
 	private Long totalAmount;
+	@Temporal(TemporalType.DATE)
+	private Date inventoryDate;
 	@OneToMany(mappedBy = "inventory")
-	private List<InventoryTransaction> inventoryTransactions;
+	private List<InventoryDetail> inventoryDetails;
 	@OneToMany(mappedBy = "inventory")
 	private List<InventoryPayment> inventoryPayments;
-	@Temporal(TemporalType.DATE)
-	private Date inventoryTransDate;
 	
 	public List<InventoryPayment> getInventoryPayments() {
 		return inventoryPayments;
@@ -39,22 +39,30 @@ public class Inventory implements Serializable {
 		this.inventoryPayments = inventoryPayments;
 	}
 
-	public Date getInventoryTransDate() {
-		return inventoryTransDate;
+	public List<InventoryDetail> getInventoryDetails() {
+		return inventoryDetails;
 	}
 
-	public void setInventoryTransDate(Date inventoryTransDate) {
-		this.inventoryTransDate = inventoryTransDate;
+	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
+		this.inventoryDetails = inventoryDetails;
+	}
+
+	public Date getInventoryDate() {
+		return inventoryDate;
+	}
+
+	public void setInventoryDate(Date inventoryDate) {
+		this.inventoryDate = inventoryDate;
 	}
 
 	public Long getTotalAmount() {
 		
 		totalAmount = 0L;
 		
-		if(inventoryTransactions != null) {
-			inventoryTransactions.stream().forEach(inventoryTrans -> {
-				if(inventoryTrans.getUnitPrice() != null && inventoryTrans.getQuantity() != null)
-					totalAmount += (inventoryTrans.getUnitPrice() * inventoryTrans.getQuantity());
+		if(inventoryDetails != null) {
+			inventoryDetails.stream().forEach(inventoryDetails -> {
+				if(inventoryDetails.getUnitPrice() != null && inventoryDetails.getQuantity() != null)
+					totalAmount += (inventoryDetails.getUnitPrice() * inventoryDetails.getQuantity());
 			});
 		}
 		
@@ -65,12 +73,12 @@ public class Inventory implements Serializable {
 		this.totalAmount = totalAmount;
 	}
 
-	public List<InventoryTransaction> getInventoryTransactions() {
-		return inventoryTransactions;
+	public List<InventoryDetail> getInventoryTransactions() {
+		return inventoryDetails;
 	}
 
-	public void setInventoryTransactions(List<InventoryTransaction> inventoryTransactions) {
-		this.inventoryTransactions = inventoryTransactions;
+	public void setInventoryTransactions(List<InventoryDetail> inventoryDetails) {
+		this.inventoryDetails = inventoryDetails;
 	}
 
 	public Integer getId() {
