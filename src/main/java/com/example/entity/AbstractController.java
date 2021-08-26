@@ -29,7 +29,8 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 
 	@GetMapping("{id}")
 	public ResponseEntity<T> findById(@PathVariable ID id) {
-		T t = r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Item %s not found", id.toString())));
+		T t = r.findById(id)
+				.orElseThrow(() -> new ItemNotFoundException(String.format("Find error: Item %s not found", id.toString())));
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
 
@@ -41,12 +42,14 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 
 	@PutMapping("{id}")
 	public ResponseEntity<T> update(@RequestBody T t, @PathVariable ID id) {
+		r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Update error: Item %s not found", id.toString())));
 		T updatedT = r.save(t);
 		return new ResponseEntity<>(updatedT, HttpStatus.OK);
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable ID id) {
+	public ResponseEntity<?> deleteById(@PathVariable ID id) {
+		r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Delete error: Item %s not found", id.toString())));
 		r.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
