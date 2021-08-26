@@ -37,7 +37,7 @@ public class Order implements Serializable {
 	private String shipPostalCode;
 	private String shipCountry;
 	@OneToMany(mappedBy = "order")
-	private List<Payment> payment;
+	private List<InventoryPayment> inventoryPayment;
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetail;
 	@ManyToOne
@@ -77,12 +77,12 @@ public class Order implements Serializable {
 		this.totalAmount = totalAmount;
 	}
 
-	public List<Payment> getPayment() {
-		return payment;
+	public List<InventoryPayment> getPayment() {
+		return inventoryPayment;
 	}
 
-	public void setPayment(List<Payment> payment) {
-		this.payment = payment;
+	public void setPayment(List<InventoryPayment> inventoryPayment) {
+		this.inventoryPayment = inventoryPayment;
 	}
 
 	public Long getId() {

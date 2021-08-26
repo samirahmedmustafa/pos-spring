@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -27,7 +27,13 @@ public class Product implements Serializable {
 	private String nameAr;
 	private String img;
 	private String quantityPerUnit;
-	private Long listPrice;
+	private Float vatPercentage;
+	@Transient
+	private Float vatValue;
+	private Double averageCost;
+	private Long sellPrice;
+	private Integer quantity;
+	private Long discount;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
@@ -35,10 +41,52 @@ public class Product implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
-	@OneToOne(mappedBy = "product")
-	private Inventory inventory;
+	@OneToMany(mappedBy = "product")
+	private List<InventoryTransaction> inventoryTransactions;
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetail;
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public Long getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Long discount) {
+		this.discount = discount;
+	}
+
+	public Float getVatPercentage() {
+		return vatPercentage;
+	}
+
+	public void setVatPercentage(Float vatPercentage) {
+		this.vatPercentage = vatPercentage;
+	}
+
+	public Float getVatValue() {
+		if(vatPercentage != null)
+			return (sellPrice * vatPercentage)/100;
+		return vatValue;
+	}
+
+	public void setVatValue(Float vatValue) {
+		this.vatValue = vatValue;
+	}
+
+	public Double getAverageCost() {
+		return averageCost;
+	}
+
+	public void setAverageCost(Double averageCost) {
+		this.averageCost = averageCost;
+	}
 
 	public String getBarCode() {
 		return barCode;
@@ -48,20 +96,20 @@ public class Product implements Serializable {
 		this.barCode = barCode;
 	}
 
-	public Long getListPrice() {
-		return listPrice;
+	public Long getSellPrice() {
+		return sellPrice;
 	}
 
-	public void setListPrice(Long listPrice) {
-		this.listPrice = listPrice;
+	public void setSellPrice(Long sellPrice) {
+		this.sellPrice = sellPrice;
 	}
 
-	public Inventory getInventory() {
-		return inventory;
+	public List<InventoryTransaction> getInventoryTransactions() {
+		return inventoryTransactions;
 	}
 
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
+	public void setInventoryTransactions(List<InventoryTransaction> inventoryTransactions) {
+		this.inventoryTransactions = inventoryTransactions;
 	}
 
 	public List<OrderDetail> getOrderDetail() {

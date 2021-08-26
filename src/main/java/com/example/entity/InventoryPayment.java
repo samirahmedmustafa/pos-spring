@@ -15,8 +15,8 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "payments")
-public class Payment implements Serializable {
+@Table(name = "inventory_payments")
+public class InventoryPayment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -31,7 +31,18 @@ public class Payment implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private PaymentType paymentType;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Inventory inventory;
 	private Long amount;
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
 
 	public Long getId() {
 		return id;
@@ -73,7 +84,7 @@ public class Payment implements Serializable {
 		this.amount = amount;
 	}
 
-	public Payment() {
+	public InventoryPayment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

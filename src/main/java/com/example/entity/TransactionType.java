@@ -17,7 +17,7 @@ public class TransactionType {
 	private Integer id;
 	private Long name;
 	@OneToMany(mappedBy = "paymentType")
-	private List<Payment> payments;
+	private List<InventoryPayment> inventoryPayments;
 	@OneToMany(mappedBy = "transactionType")
 	private List<TransactionType> transactionType;
 
@@ -33,12 +33,12 @@ public class TransactionType {
 		return id;
 	}
 
-	public List<Payment> getPayments() {
-		return payments;
+	public List<InventoryPayment> getPayments() {
+		return inventoryPayments;
 	}
 
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
+	public void setPayments(List<InventoryPayment> inventoryPayments) {
+		this.inventoryPayments = inventoryPayments;
 	}
 
 	public Long getName() {

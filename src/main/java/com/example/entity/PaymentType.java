@@ -16,19 +16,19 @@ public class PaymentType {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@OneToMany(mappedBy = "paymentType")
-	private List<Payment> payments;
+	private List<InventoryPayment> inventoryPayments;
 	private Long name;
 
 	public Integer getId() {
 		return id;
 	}
 
-	public List<Payment> getPayments() {
-		return payments;
+	public List<InventoryPayment> getPayments() {
+		return inventoryPayments;
 	}
 
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
+	public void setPayments(List<InventoryPayment> inventoryPayments) {
+		this.inventoryPayments = inventoryPayments;
 	}
 
 	public Long getName() {

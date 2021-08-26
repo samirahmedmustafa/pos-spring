@@ -1,57 +1,76 @@
 package com.example.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "inventory")
-public class Inventory {
+@Table(name = "inventory_transactions")
+public class Inventory implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@OneToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Product product;
-	private Integer quantity;
-	private Long purchasePrice;
-	private Long sellPrice;
+	@Transient
+	private Long totalAmount;
+	@OneToMany(mappedBy = "inventory")
+	private List<InventoryTransaction> inventoryTransactions;
+	@OneToMany(mappedBy = "inventory")
+	private List<InventoryPayment> inventoryPayments;
+	@Temporal(TemporalType.DATE)
+	private Date inventoryTransDate;
 	
-	public Long getPurchasePrice() {
-		return purchasePrice;
+	public List<InventoryPayment> getInventoryPayments() {
+		return inventoryPayments;
 	}
 
-	public void setPurchasePrice(Long purchasePrice) {
-		this.purchasePrice = purchasePrice;
+	public void setInventoryPayments(List<InventoryPayment> inventoryPayments) {
+		this.inventoryPayments = inventoryPayments;
 	}
 
-	public Long getSellPrice() {
-		return sellPrice;
+	public Date getInventoryTransDate() {
+		return inventoryTransDate;
 	}
 
-	public void setSellPrice(Long sellPrice) {
-		this.sellPrice = sellPrice;
+	public void setInventoryTransDate(Date inventoryTransDate) {
+		this.inventoryTransDate = inventoryTransDate;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Long getTotalAmount() {
+		
+		totalAmount = 0L;
+		
+		if(inventoryTransactions != null) {
+			inventoryTransactions.stream().forEach(inventoryTrans -> {
+				if(inventoryTrans.getUnitPrice() != null && inventoryTrans.getQuantity() != null)
+					totalAmount += (inventoryTrans.getUnitPrice() * inventoryTrans.getQuantity());
+			});
+		}
+		
+		return totalAmount;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setTotalAmount(Long totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public List<InventoryTransaction> getInventoryTransactions() {
+		return inventoryTransactions;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setInventoryTransactions(List<InventoryTransaction> inventoryTransactions) {
+		this.inventoryTransactions = inventoryTransactions;
 	}
 
 	public Integer getId() {
