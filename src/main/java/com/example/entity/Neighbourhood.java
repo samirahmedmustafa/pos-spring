@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,8 +25,8 @@ public class Neighbourhood {
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
 	private List<Address> addresses;
 	@JsonIgnore
-	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
-	private List<Neighbourhood> cities;
+	@OneToOne(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
+	private City city;
 
 	public String getNameAr() {
 		return nameAr;
@@ -43,12 +44,12 @@ public class Neighbourhood {
 		this.addresses = addresses;
 	}
 
-	public List<Neighbourhood> getCities() {
-		return cities;
+	public City getCity() {
+		return city;
 	}
 
-	public void setCities(List<Neighbourhood> cities) {
-		this.cities = cities;
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	public Integer getId() {
