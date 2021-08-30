@@ -6,7 +6,7 @@ import com.example.repository.AddressRepo;
 
 @RestController
 @RequestMapping("addresses")
-public class AddressController extends AbstractController<AddressRepo, Address, Integer> {
+public class AddressController extends AbstractController<AddressRepo, Address, Long> {
 
 	public AddressController(AddressRepo r) {
 		super(r);
