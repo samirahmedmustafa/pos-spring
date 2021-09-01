@@ -37,7 +37,6 @@ public class Product implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
