@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "products")
@@ -43,15 +42,24 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product")
 	private List<InventoryDetail> inventoryDetails;
 	@OneToMany(mappedBy = "product")
-	private List<OrderDetail> orderDetail;
+	private List<OrderDetail> orderDetails;
 
 	public Integer getQuantity() {
+//		quantity = 0;
+//		System.out.println("inventories: " + inventoryDetails);
+//		System.out.println("orders: " + orderDetails);
+//		this.inventoryDetails.stream().forEach((inventories)->{
+//			quantity += inventories.getQuantity();
+//		});
+//		this.orderDetails.stream().forEach((orders)->{
+//			quantity -= orders.getQuantity();
+//		});
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+//	public void setQuantity(Integer quantity) {
+//		this.quantity = quantity;
+//	}
 
 	public Long getDiscount() {
 		return discount;
@@ -75,17 +83,17 @@ public class Product implements Serializable {
 		return vatValue;
 	}
 
-	public void setVatValue(Float vatValue) {
-		this.vatValue = vatValue;
-	}
+//	public void setVatValue(Float vatValue) {
+//		this.vatValue = vatValue;
+//	}
 
 	public Double getAverageCost() {
 		return averageCost;
 	}
 
-	public void setAverageCost(Double averageCost) {
-		this.averageCost = averageCost;
-	}
+//	public void setAverageCost(Double averageCost) {
+//		this.averageCost = averageCost;
+//	}
 
 	public String getBarCode() {
 		return barCode;
@@ -112,11 +120,11 @@ public class Product implements Serializable {
 	}
 
 	public List<OrderDetail> getOrderDetail() {
-		return orderDetail;
+		return orderDetails;
 	}
 
-	public void setOrderDetail(List<OrderDetail> orderDetail) {
-		this.orderDetail = orderDetail;
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
 	}
 
 	public Category getCategory() {
