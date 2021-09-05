@@ -27,6 +27,17 @@ public class Country {
 	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.MERGE)
 	private List<City> cities;
+	@JsonIgnore
+	@OneToMany(mappedBy = "country", cascade = CascadeType.MERGE)
+	private List<Supplier> suppliers;
+
+	public List<Supplier> getSuppliers() {
+		return suppliers;
+	}
+
+	public void setSuppliers(List<Supplier> suppliers) {
+		this.suppliers = suppliers;
+	}
 
 	public String getNameAr() {
 		return nameAr;

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,11 +24,13 @@ public class Supplier implements Serializable {
 	private String name;
 	private String contact;
 	private String title;
-	private String address;
-	private String city;
-	private String region;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private City city;
 	private String postalCode;
-	private String country;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Country country;
 	private String phone;
 	private String homePage;
 	@JsonIgnore
@@ -73,28 +77,12 @@ public class Supplier implements Serializable {
 		this.title = title;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
 	}
 
 	public String getPostalCode() {
@@ -105,11 +93,11 @@ public class Supplier implements Serializable {
 		this.postalCode = postalCode;
 	}
 
-	public String getCountry() {
+	public Country getCountry() {
 		return country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(Country country) {
 		this.country = country;
 	}
 
