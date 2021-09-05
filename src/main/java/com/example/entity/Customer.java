@@ -24,11 +24,11 @@ public class Customer implements Serializable {
 	private String lastName;
 	private String companyName;
 	private String phone;
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Order> orders;
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Address> addresses;
 
 	public Customer() {
