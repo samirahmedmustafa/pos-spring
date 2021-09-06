@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,8 +14,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "countries")
-public class Country {
+public class Country implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -30,6 +32,17 @@ public class Country {
 	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.MERGE)
 	private List<Supplier> suppliers;
+	@JsonIgnore
+	@OneToMany(mappedBy = "country", cascade = CascadeType.MERGE)
+	private List<Employee> employees;
+
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
 
 	public List<Supplier> getSuppliers() {
 		return suppliers;

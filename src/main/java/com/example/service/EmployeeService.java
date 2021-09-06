@@ -31,38 +31,17 @@ public class EmployeeService {
 	}
 
 	public Employee save(Employee employee) {
-		Employee savedemployee = employeeRepo.save(employee);
-		return savedemployee;
+		Employee saved = employeeRepo.save(employee);
+		return saved;
 	}
 
 	public Employee update(Employee employee, Integer id) {
-		Employee existingEmployee = employeeRepo.findById(id)
-				.orElseThrow(() -> new ItemNotFoundException(String.format("Couldn't find employee with the id %d", id)));
-		Employee updatedEmployee = updateEmployee(existingEmployee, employee);
-		return employeeRepo.save(updatedEmployee);
+		employeeRepo.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Couldn't find employee with the id %d", id)));
+		Employee updated = employeeRepo.save(employee);
+		return updated;
 	}
 
 	public void deleteById(Integer id) {
 		employeeRepo.deleteById(id);
 	}
-
-	private Employee updateEmployee(Employee existingemployee, Employee employee) {
-		existingemployee.setAddress(employee.getAddress());
-		existingemployee.setCity(employee.getCity());
-		existingemployee.setCountry(employee.getCountry());
-		existingemployee.setRegion(employee.getRegion());
-		existingemployee.setTitle(employee.getTitle());
-		existingemployee.setBirthDay(employee.getBirthDay());
-		existingemployee.setFirstName(employee.getFirstName());
-		existingemployee.setLastName(employee.getLastName());
-		existingemployee.setEmail(employee.getEmail());
-		existingemployee.setPassword(employee.getPassword());
-		existingemployee.setNotes(employee.getNotes());
-		existingemployee.setIsActive(employee.getIsActive());
-		existingemployee.setOrders(employee.getOrders());
-		existingemployee.setPhoto(employee.getPhoto());
-		existingemployee.setReportsTo(employee.getReportsTo());
-		return existingemployee;
-	}
-
 }

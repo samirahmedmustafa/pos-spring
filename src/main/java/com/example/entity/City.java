@@ -34,7 +34,18 @@ public class City implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "city")
 	private List<Supplier> suppliers;
+	@JsonIgnore
+	@OneToMany(mappedBy = "city")
+	private List<Employee> employees;
 	
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
+
 	public List<Supplier> getSuppliers() {
 		return suppliers;
 	}

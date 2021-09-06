@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -37,9 +38,15 @@ public class Employee implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date hireDate;
 	private String address;
-	private String city;
-	private String country;
-	private String region;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private City city;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Country country;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Neighbourhood neighbourhood;
 	private String homePhone;
 	private String photo;
 	@OneToOne
@@ -142,28 +149,28 @@ public class Employee implements Serializable {
 		this.address = address;
 	}
 
-	public String getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 
-	public String getCountry() {
+	public Country getCountry() {
 		return country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(Country country) {
 		this.country = country;
 	}
 
-	public String getRegion() {
-		return region;
+	public Neighbourhood getNeighbourhood() {
+		return neighbourhood;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
+	public void setNeighbourhood(Neighbourhood neighbourhood) {
+		this.neighbourhood = neighbourhood;
 	}
 
 	public String getHomePhone() {

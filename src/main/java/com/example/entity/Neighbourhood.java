@@ -25,8 +25,19 @@ public class Neighbourhood {
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
 	private List<Address> addresses;
 	@JsonIgnore
+	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
+	private List<Employee> employees;
+	@JsonIgnore
 	@OneToOne(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
 	private City city;
+
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
 
 	public String getNameAr() {
 		return nameAr;

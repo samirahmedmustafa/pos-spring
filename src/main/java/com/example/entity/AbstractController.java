@@ -33,7 +33,7 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 				.orElseThrow(() -> new ItemNotFoundException(String.format("Find error: Item %s not found", id.toString())));
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
-
+	
 	@PostMapping
 	public ResponseEntity<T> save(@RequestBody T t) {
 		T savedT = r.save(t);

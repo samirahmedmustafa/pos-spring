@@ -1,6 +1,8 @@
 package com.example.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -27,9 +31,19 @@ public class InventoryDetail implements Serializable {
 	private Inventory inventory;
 	private Integer quantity;
 	private Long unitPrice;
+	@Temporal(TemporalType.DATE)
+	private Date expirationDate;
 	@Transient
 	private Long subTotal;
 	
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
 	public Inventory getInventory() {
 		return inventory;
 	}
