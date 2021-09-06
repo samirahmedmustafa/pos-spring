@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.entity.City;
-import com.example.entity.Country;
 import com.example.exception.ItemNotFoundException;
 import com.example.repository.CityRepo;
 

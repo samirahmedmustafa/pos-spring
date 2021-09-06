@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.repository.OrderPaymentRepo;
 
 @RestController
-@RequestMapping("order_payments")
+@RequestMapping("orderPayments")
 public class OrderPaymentController extends AbstractController<OrderPaymentRepo, OrderPayment, Long> {
 
 	public OrderPaymentController(OrderPaymentRepo r) {

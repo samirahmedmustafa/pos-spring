@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "order_details")
 public class OrderDetail implements Serializable {
@@ -19,22 +22,25 @@ public class OrderDetail implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Integer quantity;
-	private Long unitPrice;
-	private Long discount;
 	@Transient
 	private Long subTotal;
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Status status;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 
 	public Long getSubTotal() {
-		subTotal = quantity * unitPrice;
+		System.out.println("product: " + product);
+		if(product != null)
+			subTotal = quantity * product.getSellPrice();
 		return subTotal;
 	}
 
@@ -66,28 +72,12 @@ public class OrderDetail implements Serializable {
 		this.id = id;
 	}
 
-	public Long getUnitPrice() {
-		return unitPrice;
-	}
-
-	public void setUnitPrice(Long unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
 	public Integer getQuantity() {
 		return quantity;
 	}
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
-	}
-
-	public Long getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(Long discount) {
-		this.discount = discount;
 	}
 
 	public Status getStatus() {

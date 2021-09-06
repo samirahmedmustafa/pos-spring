@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.repository.InventoryDetailRepo;
 
 @RestController
-@RequestMapping("inventorydetails")
+@RequestMapping("inventoryDetails")
 public class InventoryDetailController extends AbstractController<InventoryDetailRepo, InventoryDetail, Long> {
 
 	public InventoryDetailController(InventoryDetailRepo r) {

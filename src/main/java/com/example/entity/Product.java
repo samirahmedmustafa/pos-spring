@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "products")
 public class Product implements Serializable {
@@ -33,14 +36,18 @@ public class Product implements Serializable {
 	private Integer quantity;
 	private Long discount;
 	private Double averageCost;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<InventoryDetail> inventoryDetails;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetails;
 
@@ -57,9 +64,9 @@ public class Product implements Serializable {
 		return quantity;
 	}
 
-//	public void setQuantity(Integer quantity) {
-//		this.quantity = quantity;
-//	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
 	public Long getDiscount() {
 		return discount;
