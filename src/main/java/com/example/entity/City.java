@@ -13,10 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "cities")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class City implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,8 +31,7 @@ public class City implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Country country;
-	@OneToOne
-	@JoinColumn(referencedColumnName = "id")
+	@OneToOne(mappedBy = "city")
 	private Neighbourhood neighbourhood;
 	@JsonIgnore
 	@OneToMany(mappedBy = "city")

@@ -51,9 +51,10 @@ public class Product implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
-	@JsonIgnore
-	@OneToMany(mappedBy = "product")
+//	@JsonIgnore
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 

@@ -25,10 +25,10 @@ public class Customer implements Serializable {
 	private String companyName;
 	private String phone;
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
 	private List<Order> orders;
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
 	private List<Address> addresses;
 
 	public Customer() {

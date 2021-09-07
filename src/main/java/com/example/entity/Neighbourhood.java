@@ -6,14 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "neighbourhoods")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Neighbourhood {
 
 	@Id
@@ -27,8 +31,8 @@ public class Neighbourhood {
 	@JsonIgnore
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
 	private List<Employee> employees;
-	@JsonIgnore
-	@OneToOne(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
+	@OneToOne
+	@JoinColumn(referencedColumnName = "id")
 	private City city;
 
 	public List<Employee> getEmployees() {

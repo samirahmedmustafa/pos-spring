@@ -3,6 +3,8 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +17,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "orders")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +37,8 @@ public class Order implements Serializable {
 	private Date shippedDate;
 	@Transient
 	private Long totalAmount;
-	@OneToMany(mappedBy = "order")
+	@JsonIgnore
+	@OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
 	private List<OrderDetail> orderDetail;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")

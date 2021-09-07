@@ -16,10 +16,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "employees")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +57,7 @@ public class Employee implements Serializable {
 	private Employee reportsTo;
 	private String notes;
 	@JsonIgnore
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = false)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.MERGE)
 	private List<Order> orders;
 
 	public Employee() {
