@@ -31,10 +31,10 @@ public class Employee implements Serializable {
 	private String firstName;
 	private String email;
 	private String password;
-	private Boolean isActive;
+	private Boolean inActive;
 	private String title;
 	@Temporal(value = TemporalType.DATE)
-	private Date birthDay;
+	private Date birthDate;
 	@Temporal(value = TemporalType.DATE)
 	private Date hireDate;
 	private String address;
@@ -54,7 +54,7 @@ public class Employee implements Serializable {
 	private Employee reportsTo;
 	private String notes;
 	@JsonIgnore
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Order> orders;
 
 	public Employee() {
@@ -77,12 +77,12 @@ public class Employee implements Serializable {
 		this.password = password;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
+	public Boolean getInActive() {
+		return inActive;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setInActive(Boolean inActive) {
+		this.inActive = inActive;
 	}
 
 	public List<Order> getOrders() {
@@ -125,12 +125,12 @@ public class Employee implements Serializable {
 		this.title = title;
 	}
 
-	public Date getBirthDay() {
-		return birthDay;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBirthDay(Date birthDay) {
-		this.birthDay = birthDay;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public Date getHireDate() {

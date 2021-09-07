@@ -10,6 +10,5 @@ public class OrderDetailController extends AbstractController<OrderDetailRepo, O
 
 	public OrderDetailController(OrderDetailRepo r) {
 		super(r);
-		// TODO Auto-generated constructor stub
 	}
 }
