@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "expense_payments")
@@ -24,10 +25,10 @@ public class ExpensePayment implements Serializable {
 	private Long amount;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
+	@JsonManagedReference("paymentType-expensePayments")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private PaymentType paymentType;
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Expense expense;

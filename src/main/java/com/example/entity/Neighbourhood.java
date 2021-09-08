@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,28 +12,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "neighbourhoods")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Neighbourhood {
+public class Neighbourhood implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
 	private String nameAr;
-	@JsonIgnore
-	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
+	@JsonBackReference("addresses-neighbourhood")
 	private List<Address> addresses;
-	@JsonIgnore
-	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
+	@JsonBackReference("neighbourhood-employee")
 	private List<Employee> employees;
 	@OneToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("neighbourhood-city")
 	private City city;
 
 	public List<Employee> getEmployees() {

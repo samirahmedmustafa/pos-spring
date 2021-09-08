@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "inventory_payments")
@@ -22,17 +23,19 @@ public class InventoryPayment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@JsonIgnore
+	@JsonManagedReference("order-inventoryPayment")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
+	@JsonManagedReference("paymentType-inventoryPayment")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private PaymentType paymentType;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("inventoryPayments-inventory")
 	private Inventory inventory;
 	private Long amount;
 

@@ -13,6 +13,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "inventories")
 public class Inventory implements Serializable {
@@ -26,8 +28,10 @@ public class Inventory implements Serializable {
 	private Long totalAmount;
 	@Temporal(TemporalType.DATE)
 	private Date inventoryDate;
+	@JsonBackReference("inventory-inventoryDetails")
 	@OneToMany(mappedBy = "inventory")
 	private List<InventoryDetail> inventoryDetails;
+	@JsonBackReference("inventoryPayments-inventory")
 	@OneToMany(mappedBy = "inventory")
 	private List<InventoryPayment> inventoryPayments;
 	

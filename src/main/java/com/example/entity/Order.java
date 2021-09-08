@@ -17,13 +17,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "orders")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,25 +38,28 @@ public class Order implements Serializable {
 	private Date shippedDate;
 	@Transient
 	private Long totalAmount;
-	@JsonIgnore
-	@OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
-	private List<OrderDetail> orderDetail;
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@JsonBackReference("orderDetails-order")
+	private List<OrderDetail> orderDetails;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference(value = "shipper-order")
 	private Shipper shipper;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference(value = "order-customer")
 	private Customer customer;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference(value = "employee-order")
 	private Employee employee;
 
-	public List<OrderDetail> getOrderDetail() {
-		return orderDetail;
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
 	}
 
-	public void setOrderDetail(List<OrderDetail> orderDetail) {
-		this.orderDetail = orderDetail;
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
 	}
 
 	public Order() {
@@ -66,7 +70,7 @@ public class Order implements Serializable {
 		
 		totalAmount = (long) 0;
 		
-		this.getOrderDetail().stream().forEach(elem -> {
+		this.getOrderDetails().stream().forEach(elem -> {
 			totalAmount += elem.getSubTotal();
 		});
 		

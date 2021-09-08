@@ -12,13 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "suppliers")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Supplier implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,17 +29,19 @@ public class Supplier implements Serializable {
 	private String name;
 	private String contact;
 	private String title;
+	@JsonManagedReference("supplier-city")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private City city;
 	private String postalCode;
+	@JsonManagedReference("supplier-country")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Country country;
 	private String phone;
 	private String homePage;
-	@JsonIgnore
-	@OneToMany(mappedBy = "supplier", cascade = CascadeType.MERGE)
+	@JsonBackReference("supplier-products")
+	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
 	private List<Product> products;
 
 	public Integer getId() {

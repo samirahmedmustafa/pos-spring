@@ -2,6 +2,8 @@ package com.example.entity;
 
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -20,8 +23,8 @@ public class Status implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
-	@JsonIgnore
-	@OneToMany(mappedBy = "status")
+	@OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
+	@JsonBackReference("status-orderDetails")
 	private List<OrderDetail> orderDetail;
 
 	public List<OrderDetail> getOrderDetail() {

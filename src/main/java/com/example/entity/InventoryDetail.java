@@ -14,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "inventory_details")
 public class InventoryDetail implements Serializable {
@@ -23,9 +25,11 @@ public class InventoryDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@JsonManagedReference("inventoryDetails-product")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
+	@JsonManagedReference("inventory-inventoryDetails")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Inventory inventory;

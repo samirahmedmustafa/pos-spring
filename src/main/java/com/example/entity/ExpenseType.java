@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "expense_types")
 public class ExpenseType implements Serializable {
@@ -19,6 +21,7 @@ public class ExpenseType implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String expenseName;
+	@JsonBackReference("expenseType-expense")
 	@OneToMany(mappedBy = "expenseType")
 	private List<Expense> expenses;
 

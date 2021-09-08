@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,11 +25,11 @@ public class Customer implements Serializable {
 	private String lastName;
 	private String companyName;
 	private String phone;
-	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
+	@JsonBackReference("order-customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Order> orders;
-	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
+	@JsonBackReference("customer-address")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Address> addresses;
 
 	public Customer() {

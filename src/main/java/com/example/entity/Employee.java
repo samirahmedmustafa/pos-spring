@@ -16,13 +16,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "employees")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -43,21 +44,26 @@ public class Employee implements Serializable {
 	private String address;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("employees-city")
 	private City city;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("employee-country")
 	private Country country;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("neighbourhood-employee")
 	private Neighbourhood neighbourhood;
 	private String homePhone;
 	private String photo;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference(value = "reportsTo")
+	@JsonBackReference(value = "reportsTo")
 	private Employee reportsTo;
 	private String notes;
-	@JsonIgnore
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.MERGE)
+	@JsonBackReference("employee-order")
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<Order> orders;
 
 	public Employee() {

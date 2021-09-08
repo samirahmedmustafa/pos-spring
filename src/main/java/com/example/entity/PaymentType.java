@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "payment_types")
 public class PaymentType {
@@ -16,10 +18,13 @@ public class PaymentType {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private Long name;
+	@JsonBackReference("paymentType-inventoryPayment")
 	@OneToMany(mappedBy = "paymentType")
 	private List<InventoryPayment> inventoryPayments;
+	@JsonBackReference("paymentType-orderPayment")
 	@OneToMany(mappedBy = "paymentType")
 	private List<OrderPayment> orderPayments;
+	@JsonBackReference("paymentType-expensePayments")
 	@OneToMany(mappedBy = "paymentType")
 	private List<ExpensePayment> expensePayments;
 

@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "order_payments")
@@ -25,10 +26,10 @@ public class OrderPayment implements Serializable {
 	private Long amount;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
+	@JsonManagedReference("paymentType-orderPayment")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private PaymentType paymentType;
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;

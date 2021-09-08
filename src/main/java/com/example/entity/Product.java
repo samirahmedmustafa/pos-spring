@@ -15,15 +15,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "products")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -43,19 +38,19 @@ public class Product implements Serializable {
 	private Integer quantity;
 	private Long discount;
 	private Double averageCost;
-	@JsonIgnore
+	@JsonManagedReference("category-product")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("supplier-products")
 	private Supplier supplier;
-//	@JsonIgnore
+	@JsonBackReference("inventoryDetails-product")
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
-	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonBackReference("product-orderDetails")
 	private List<OrderDetail> orderDetails;
 
 	public List<OrderDetail> getOrderDetails() {
@@ -109,17 +104,9 @@ public class Product implements Serializable {
 		return vatValue;
 	}
 
-//	public void setVatValue(Float vatValue) {
-//		this.vatValue = vatValue;
-//	}
-
 	public Double getAverageCost() {
 		return averageCost;
 	}
-
-//	public void setAverageCost(Double averageCost) {
-//		this.averageCost = averageCost;
-//	}
 
 	public String getBarCode() {
 		return barCode;

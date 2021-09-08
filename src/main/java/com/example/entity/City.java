@@ -13,13 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "cities")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class City implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,14 +31,16 @@ public class City implements Serializable {
 	private String nameAr;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
+	@JsonManagedReference("country-city")
 	private Country country;
 	@OneToOne(mappedBy = "city")
+	@JsonBackReference("neighbourhood-city")
 	private Neighbourhood neighbourhood;
-	@JsonIgnore
 	@OneToMany(mappedBy = "city")
+	@JsonBackReference("supplier-city")
 	private List<Supplier> suppliers;
-	@JsonIgnore
 	@OneToMany(mappedBy = "city")
+	@JsonBackReference("employees-city")
 	private List<Employee> employees;
 	
 	public List<Employee> getEmployees() {
