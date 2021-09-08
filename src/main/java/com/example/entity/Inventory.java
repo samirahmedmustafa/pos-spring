@@ -14,9 +14,12 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "inventories")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Inventory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,10 +31,8 @@ public class Inventory implements Serializable {
 	private Long totalAmount;
 	@Temporal(TemporalType.DATE)
 	private Date inventoryDate;
-	@JsonBackReference("inventory-inventoryDetails")
 	@OneToMany(mappedBy = "inventory")
 	private List<InventoryDetail> inventoryDetails;
-	@JsonBackReference("inventoryPayments-inventory")
 	@OneToMany(mappedBy = "inventory")
 	private List<InventoryPayment> inventoryPayments;
 	

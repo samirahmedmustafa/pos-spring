@@ -11,7 +11,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "countries")
@@ -25,16 +28,13 @@ public class Country implements Serializable {
 	private String nameAr;
 	private String code;
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-	@JsonBackReference("country-addresses")
 	private List<Address> addresses;
+	@JsonManagedReference(value = "country")
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-	@JsonBackReference("country-city")
 	private List<City> cities;
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-	@JsonBackReference("supplier-country")
 	private List<Supplier> suppliers;
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-	@JsonBackReference("employee-country")
 	private List<Employee> employees;
 
 	public List<Employee> getEmployees() {

@@ -12,30 +12,30 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "inventory_payments")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class InventoryPayment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@JsonManagedReference("order-inventoryPayment")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
-	@JsonManagedReference("paymentType-inventoryPayment")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private PaymentType paymentType;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference("inventoryPayments-inventory")
 	private Inventory inventory;
 	private Long amount;
 

@@ -10,9 +10,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "expense_types")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ExpenseType implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,7 +24,6 @@ public class ExpenseType implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String expenseName;
-	@JsonBackReference("expenseType-expense")
 	@OneToMany(mappedBy = "expenseType")
 	private List<Expense> expenses;
 

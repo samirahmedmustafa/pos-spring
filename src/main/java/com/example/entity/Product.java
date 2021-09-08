@@ -15,10 +15,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "products")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,19 +41,15 @@ public class Product implements Serializable {
 	private Integer quantity;
 	private Long discount;
 	private Double averageCost;
-	@JsonManagedReference("category-product")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference("supplier-products")
 	private Supplier supplier;
-	@JsonBackReference("inventoryDetails-product")
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	@JsonBackReference("product-orderDetails")
 	private List<OrderDetail> orderDetails;
 
 	public List<OrderDetail> getOrderDetails() {

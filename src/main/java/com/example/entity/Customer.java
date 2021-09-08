@@ -11,10 +11,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "customers")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,10 +28,8 @@ public class Customer implements Serializable {
 	private String lastName;
 	private String companyName;
 	private String phone;
-	@JsonBackReference("order-customer")
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Order> orders;
-	@JsonBackReference("customer-address")
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Address> addresses;
 

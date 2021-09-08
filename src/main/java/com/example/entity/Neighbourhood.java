@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "neighbourhoods")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Neighbourhood implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,14 +30,11 @@ public class Neighbourhood implements Serializable {
 	private String name;
 	private String nameAr;
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
-	@JsonBackReference("addresses-neighbourhood")
 	private List<Address> addresses;
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
-	@JsonBackReference("neighbourhood-employee")
 	private List<Employee> employees;
 	@OneToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference("neighbourhood-city")
 	private City city;
 
 	public List<Employee> getEmployees() {

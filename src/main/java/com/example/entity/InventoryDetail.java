@@ -14,10 +14,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "inventory_details")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class InventoryDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,11 +28,9 @@ public class InventoryDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@JsonManagedReference("inventoryDetails-product")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
-	@JsonManagedReference("inventory-inventoryDetails")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Inventory inventory;

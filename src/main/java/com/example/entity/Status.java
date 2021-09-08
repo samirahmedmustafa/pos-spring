@@ -12,10 +12,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "statuses")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Status implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +27,6 @@ public class Status implements Serializable {
 	private Integer id;
 	private String name;
 	@OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
-	@JsonBackReference("status-orderDetails")
 	private List<OrderDetail> orderDetail;
 
 	public List<OrderDetail> getOrderDetail() {

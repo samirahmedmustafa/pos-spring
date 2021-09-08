@@ -11,11 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "expense_payments")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ExpensePayment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,7 +29,6 @@ public class ExpensePayment implements Serializable {
 	private Long amount;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
-	@JsonManagedReference("paymentType-expensePayments")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private PaymentType paymentType;

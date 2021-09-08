@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "cities")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class City implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,18 +30,15 @@ public class City implements Serializable {
 	private Integer id;
 	private String name;
 	private String nameAr;
+	@JsonBackReference(value = "country")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference("country-city")
 	private Country country;
 	@OneToOne(mappedBy = "city")
-	@JsonBackReference("neighbourhood-city")
 	private Neighbourhood neighbourhood;
 	@OneToMany(mappedBy = "city")
-	@JsonBackReference("supplier-city")
 	private List<Supplier> suppliers;
 	@OneToMany(mappedBy = "city")
-	@JsonBackReference("employees-city")
 	private List<Employee> employees;
 	
 	public List<Employee> getEmployees() {

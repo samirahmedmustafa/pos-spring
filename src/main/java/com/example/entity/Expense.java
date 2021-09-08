@@ -13,10 +13,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "expenses")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Expense implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +34,6 @@ public class Expense implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Employee employee;
-	@JsonManagedReference("expenseType-expense")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private ExpenseType expenseType;

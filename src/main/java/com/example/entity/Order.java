@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "orders")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,19 +40,15 @@ public class Order implements Serializable {
 	@Transient
 	private Long totalAmount;
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	@JsonBackReference("orderDetails-order")
 	private List<OrderDetail> orderDetails;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference(value = "shipper-order")
 	private Shipper shipper;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference(value = "order-customer")
 	private Customer customer;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	@JsonManagedReference(value = "employee-order")
 	private Employee employee;
 
 	public List<OrderDetail> getOrderDetails() {
