@@ -54,8 +54,15 @@ public class Order implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Status status;
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public List<OrderDetail> getOrderDetails() {
-		System.out.println("order orderDetails: " + orderDetails);
 		return orderDetails;
 	}
 
