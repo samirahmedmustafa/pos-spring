@@ -25,11 +25,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "orders")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -37,8 +36,9 @@ public class Order implements Serializable {
 	private Date orderDate;
 	@Temporal(TemporalType.DATE)
 	private Date shippedDate;
-	@Transient
-	private Long totalAmount;
+//	@Transient
+//	private Long totalAmount;
+	@JsonIgnore
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 	@ManyToOne
@@ -50,8 +50,12 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Employee employee;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Status status;
 
 	public List<OrderDetail> getOrderDetails() {
+		System.out.println("order orderDetails: " + orderDetails);
 		return orderDetails;
 	}
 
@@ -63,20 +67,24 @@ public class Order implements Serializable {
 		super();
 	}
 
-	public Long getTotalAmount() {
-		
-		totalAmount = (long) 0;
-		
-		this.getOrderDetails().stream().forEach(elem -> {
-			totalAmount += elem.getSubTotal();
-		});
-		
-		return totalAmount;
-	}
-
-	public void setTotalAmount(Long totalAmount) {
-		this.totalAmount = totalAmount;
-	}
+//	public Long getTotalAmount() {
+//
+////		this.totalAmount = (long) 0;
+////
+////		System.out.println("order orderDetails size: " + this.getOrderDetails().size());
+////
+////		if (orderDetails != null) {
+////			this.orderDetails.stream().forEach(elem -> {
+////				this.totalAmount += elem.getSubTotal();
+////			});
+////		}
+////
+//		return totalAmount;
+//	}
+//
+//	public void setTotalAmount(Long totalAmount) {
+//		this.totalAmount = totalAmount;
+//	}
 
 	public Long getId() {
 		return id;

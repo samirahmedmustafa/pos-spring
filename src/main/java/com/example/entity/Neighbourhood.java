@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,7 +21,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "neighbourhoods")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Neighbourhood implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,11 +29,13 @@ public class Neighbourhood implements Serializable {
 	private Integer id;
 	private String name;
 	private String nameAr;
+	@JsonIgnore
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
 	private List<Address> addresses;
+	@JsonIgnore
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
 	private List<Employee> employees;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private City city;
 

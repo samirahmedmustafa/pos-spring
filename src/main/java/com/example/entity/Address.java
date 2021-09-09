@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "addresses")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;

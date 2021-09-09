@@ -27,13 +27,16 @@ public class Country implements Serializable {
 	private String name;
 	private String nameAr;
 	private String code;
+	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
 	private List<Address> addresses;
-	@JsonManagedReference(value = "country")
+	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
 	private List<City> cities;
+	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
 	private List<Supplier> suppliers;
+	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
 	private List<Employee> employees;
 

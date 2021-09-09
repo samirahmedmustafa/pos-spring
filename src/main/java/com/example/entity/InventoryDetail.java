@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "inventory_details")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class InventoryDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;

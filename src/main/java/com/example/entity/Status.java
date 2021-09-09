@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "statuses")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Status implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,15 +25,16 @@ public class Status implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
+	@JsonIgnore
 	@OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
-	private List<OrderDetail> orderDetail;
+	private List<Order> orders;
 
-	public List<OrderDetail> getOrderDetail() {
-		return orderDetail;
+	public List<Order> getOrders() {
+		return orders;
 	}
 
-	public void setOrderDetail(List<OrderDetail> orderDetail) {
-		this.orderDetail = orderDetail;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	public Integer getId() {

@@ -16,12 +16,12 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "products")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,13 +47,19 @@ public class Product implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Supplier supplier;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
+	}
+	
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
 	}
 
 	public void setVatValue(Float vatValue) {
@@ -129,14 +135,6 @@ public class Product implements Serializable {
 
 	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
 		this.inventoryDetails = inventoryDetails;
-	}
-
-	public List<OrderDetail> getOrderDetail() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
 	}
 
 	public Category getCategory() {

@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "expenses")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Expense implements Serializable {
 
 	private static final long serialVersionUID = 1L;

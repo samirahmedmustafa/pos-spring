@@ -2,6 +2,8 @@ package com.example.entity;
 
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,11 +13,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "payment_types")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class PaymentType implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,11 +25,14 @@ public class PaymentType implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private Long name;
-	@OneToMany(mappedBy = "paymentType")
+	@JsonIgnore
+	@OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL)
 	private List<InventoryPayment> inventoryPayments;
-	@OneToMany(mappedBy = "paymentType")
+	@JsonIgnore
+	@OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL)
 	private List<OrderPayment> orderPayments;
-	@OneToMany(mappedBy = "paymentType")
+	@JsonIgnore
+	@OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL)
 	private List<ExpensePayment> expensePayments;
 
 	public Integer getId() {

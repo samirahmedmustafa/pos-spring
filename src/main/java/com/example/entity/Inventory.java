@@ -3,6 +3,8 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,11 +17,11 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "inventories")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Inventory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +33,11 @@ public class Inventory implements Serializable {
 	private Long totalAmount;
 	@Temporal(TemporalType.DATE)
 	private Date inventoryDate;
-	@OneToMany(mappedBy = "inventory")
+	@JsonIgnore
+	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
-	@OneToMany(mappedBy = "inventory")
+	@JsonIgnore
+	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
 	private List<InventoryPayment> inventoryPayments;
 	
 	public List<InventoryPayment> getInventoryPayments() {

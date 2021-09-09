@@ -36,7 +36,6 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 	
 	@PostMapping
 	public ResponseEntity<T> save(@RequestBody T t) {
-		System.out.println("save: " + t);
 		T savedT = r.save(t);
 		return new ResponseEntity<>(savedT, HttpStatus.CREATED);
 	}

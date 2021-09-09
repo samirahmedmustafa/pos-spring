@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "suppliers")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Supplier implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +38,7 @@ public class Supplier implements Serializable {
 	private Country country;
 	private String phone;
 	private String homePage;
+	@JsonIgnore
 	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
 	private List<Product> products;
 

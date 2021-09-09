@@ -3,6 +3,7 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "cities")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class City implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,15 +30,17 @@ public class City implements Serializable {
 	private Integer id;
 	private String name;
 	private String nameAr;
-	@JsonBackReference(value = "country")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Country country;
-	@OneToOne(mappedBy = "city")
-	private Neighbourhood neighbourhood;
-	@OneToMany(mappedBy = "city")
+	@JsonIgnore
+	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+	private List<Neighbourhood> neighbourhoods;
+	@JsonIgnore
+	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
 	private List<Supplier> suppliers;
-	@OneToMany(mappedBy = "city")
+	@JsonIgnore
+	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
 	private List<Employee> employees;
 	
 	public List<Employee> getEmployees() {
@@ -57,12 +59,12 @@ public class City implements Serializable {
 		this.suppliers = suppliers;
 	}
 
-	public Neighbourhood getNeighbourhood() {
-		return neighbourhood;
+	public List<Neighbourhood> getNeighbourhoods() {
+		return neighbourhoods;
 	}
 
-	public void setNeighbourhood(Neighbourhood neighbourhood) {
-		this.neighbourhood = neighbourhood;
+	public void setNeighbourhoods(List<Neighbourhood> neighbourhoods) {
+		this.neighbourhoods = neighbourhoods;
 	}
 
 	public Country getCountry() {

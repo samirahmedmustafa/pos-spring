@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "order_details")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class OrderDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,35 +22,32 @@ public class OrderDetail implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Integer quantity;
-	@Transient
-	private Long subTotal;
+//	@Transient
+//	private Long subTotal;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	private Status status;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 
-	public Long getSubTotal() {
-		if(product != null)
-			subTotal = quantity * product.getSellPrice();
-		return subTotal;
-	}
+//	public Long getSubTotal() {
+////		if(product != null)
+////			subTotal = quantity * product.getSellPrice();
+//		return subTotal;
+//	}
 
 	public Product getProduct() {
 		return product;
 	}
-
-	public void setSubTotal(Long subTotal) {
-		this.subTotal = subTotal;
-	}
-
+	
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+//	public void setSubTotal(Long subTotal) {
+//		this.subTotal = subTotal;
+//	}
 
 	public Order getOrder() {
 		return order;
@@ -75,14 +71,6 @@ public class OrderDetail implements Serializable {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 
 	public OrderDetail() {

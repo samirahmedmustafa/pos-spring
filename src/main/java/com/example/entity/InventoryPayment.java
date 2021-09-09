@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "inventory_payments")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class InventoryPayment implements Serializable {
 
 	private static final long serialVersionUID = 1L;

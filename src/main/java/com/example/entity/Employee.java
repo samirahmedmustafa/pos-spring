@@ -24,7 +24,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "employees")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -58,6 +57,7 @@ public class Employee implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Employee reportsTo;
 	private String notes;
+	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<Order> orders;
 
