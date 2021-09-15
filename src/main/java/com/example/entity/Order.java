@@ -36,9 +36,9 @@ public class Order implements Serializable {
 	private Date orderDate;
 	@Temporal(TemporalType.DATE)
 	private Date shippedDate;
-//	@Transient
-//	private Long totalAmount;
-	@JsonIgnore
+	@Transient
+	private Long totalAmount;
+	@JsonManagedReference("order-orderdetail")
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 	@ManyToOne
@@ -53,6 +53,29 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Status status;
+	@JsonIgnore
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderPayment> orderPayments;
+
+	public Long getTotalAmount() {
+		totalAmount = 0L;
+		if (!this.orderDetails.isEmpty())
+			this.orderDetails.stream().forEach(
+					orderDetail -> totalAmount += orderDetail.getProduct().getSellPrice() * orderDetail.getQuantity());
+		return totalAmount;
+	}
+
+	public List<OrderPayment> getOrderPayments() {
+		return orderPayments;
+	}
+
+	public void setOrderPayments(List<OrderPayment> orderPayments) {
+		this.orderPayments = orderPayments;
+	}
+
+	public void setTotalAmount(Long totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 
 	public Status getStatus() {
 		return status;
@@ -73,25 +96,6 @@ public class Order implements Serializable {
 	public Order() {
 		super();
 	}
-
-//	public Long getTotalAmount() {
-//
-////		this.totalAmount = (long) 0;
-////
-////		System.out.println("order orderDetails size: " + this.getOrderDetails().size());
-////
-////		if (orderDetails != null) {
-////			this.orderDetails.stream().forEach(elem -> {
-////				this.totalAmount += elem.getSubTotal();
-////			});
-////		}
-////
-//		return totalAmount;
-//	}
-//
-//	public void setTotalAmount(Long totalAmount) {
-//		this.totalAmount = totalAmount;
-//	}
 
 	public Long getId() {
 		return id;

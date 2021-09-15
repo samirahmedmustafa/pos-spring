@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -30,6 +31,7 @@ public class InventoryDetail implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
+	@JsonBackReference("inventory-inventorydetails")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Inventory inventory;

@@ -11,11 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "inventory_payments")
@@ -25,9 +21,6 @@ public class InventoryPayment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Order order;
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
 	@ManyToOne
@@ -60,14 +53,6 @@ public class InventoryPayment implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
 	}
 
 	public Date getPaymentDate() {

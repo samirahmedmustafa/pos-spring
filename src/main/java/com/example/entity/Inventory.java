@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -33,7 +34,7 @@ public class Inventory implements Serializable {
 	private Long totalAmount;
 	@Temporal(TemporalType.DATE)
 	private Date inventoryDate;
-	@JsonIgnore
+	@JsonManagedReference("inventory-inventorydetails")
 	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
 	@JsonIgnore

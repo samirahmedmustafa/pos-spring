@@ -9,11 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "order_details")
@@ -24,20 +20,21 @@ public class OrderDetail implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Integer quantity;
-//	@Transient
-//	private Long subTotal;
+	@Transient
+	private Long subTotal;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
+	@JsonBackReference("order-orderdetail")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 
-//	public Long getSubTotal() {
-////		if(product != null)
-////			subTotal = quantity * product.getSellPrice();
-//		return subTotal;
-//	}
+	public Long getSubTotal() {
+		if(product != null)
+			subTotal = quantity * product.getSellPrice();
+		return subTotal;
+	}
 
 	public Product getProduct() {
 		return product;
@@ -47,9 +44,9 @@ public class OrderDetail implements Serializable {
 		this.product = product;
 	}
 
-//	public void setSubTotal(Long subTotal) {
-//		this.subTotal = subTotal;
-//	}
+	public void setSubTotal(Long subTotal) {
+		this.subTotal = subTotal;
+	}
 
 	public Order getOrder() {
 		return order;
