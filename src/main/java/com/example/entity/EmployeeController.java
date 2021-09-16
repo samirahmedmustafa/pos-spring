@@ -43,7 +43,6 @@ public class EmployeeController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable Integer id) {
-		System.out.println("updateEmployee: " + employee);
 		Employee updatedEmployee = employeeService.update(employee, id);
 		return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
 	}

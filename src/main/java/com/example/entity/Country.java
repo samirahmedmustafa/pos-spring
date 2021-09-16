@@ -3,6 +3,7 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +25,11 @@ public class Country implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@Column(unique=true)
 	private String name;
+	@Column(unique=true)
 	private String nameAr;
+	@Column(unique=true)
 	private String code;
 	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)

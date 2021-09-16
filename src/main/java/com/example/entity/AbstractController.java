@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +30,7 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 
 	@GetMapping("{id}")
 	public ResponseEntity<T> findById(@PathVariable ID id) {
-		T t = r.findById(id)
-				.orElseThrow(() -> new ItemNotFoundException(String.format("Find error: Item %s not found", id.toString())));
+		T t = r.findById(id).get();
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
 	
@@ -42,7 +42,6 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 
 	@PutMapping("{id}")
 	public ResponseEntity<T> update(@RequestBody T t, @PathVariable ID id) {
-		r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Update error: Item %s not found", id.toString())));
 		T updatedT = r.save(t);
 		return new ResponseEntity<>(updatedT, HttpStatus.OK);
 	}

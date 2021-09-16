@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,8 +32,11 @@ public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@Column(unique=true)
+	private String accountName;
 	private String lastName;
 	private String firstName;
+	@Column(unique=true)
 	private String email;
 	private String password;
 	private Boolean inActive;
@@ -63,6 +67,14 @@ public class Employee implements Serializable {
 
 	public Employee() {
 		super();
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 
 	public String getEmail() {

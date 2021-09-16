@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,8 @@ public class Expense implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String expenseName;
+	@Column(unique=true)
+	private String name;
 	private Long amount;
 	@Temporal(TemporalType.DATE)
 	private Date expenseDate;
@@ -92,12 +94,12 @@ public class Expense implements Serializable {
 		this.id = id;
 	}
 
-	public String getExpenseName() {
-		return expenseName;
+	public String getName() {
+		return name;
 	}
 
-	public void setExpenseName(String expenseName) {
-		this.expenseName = expenseName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Expense() {

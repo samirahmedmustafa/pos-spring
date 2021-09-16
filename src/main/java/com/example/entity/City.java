@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,9 @@ public class City implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@Column(unique = true)
 	private String name;
+	@Column(unique=true)
 	private String nameAr;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
@@ -42,7 +45,7 @@ public class City implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
 	private List<Employee> employees;
-	
+
 	public List<Employee> getEmployees() {
 		return employees;
 	}

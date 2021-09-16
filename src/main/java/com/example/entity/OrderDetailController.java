@@ -32,7 +32,7 @@ public class OrderDetailController {
 	@GetMapping("byOrder")
 	public ResponseEntity<List<OrderDetail>> findByOrder(@RequestParam Long orderNo) {
 		List<OrderDetail> orderDetails = orderDetailRepo
-				.findByOrder(orderNo).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid order detail %d", orderNo)));
+				.findByOrder(orderNo).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid order No. %d", orderNo)));
 		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
 	}
 

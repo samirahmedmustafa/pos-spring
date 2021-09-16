@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,8 @@ public class PaymentType implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private Long name;
+	@Column(unique=true)
+	private String name;
 	@JsonIgnore
 	@OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL)
 	private List<InventoryPayment> inventoryPayments;
@@ -48,11 +50,11 @@ public class PaymentType implements Serializable {
 		this.inventoryPayments = inventoryPayments;
 	}
 
-	public Long getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(Long name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

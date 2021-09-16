@@ -3,6 +3,7 @@ package com.example.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Customer implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String companyName;
+	@Column(unique=true)
 	private String phone;
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
