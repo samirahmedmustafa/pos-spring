@@ -59,6 +59,7 @@ public class Order implements Serializable {
 
 	public Long getTotalAmount() {
 		totalAmount = 0L;
+		System.out.println(orderDetails);
 		if (!this.orderDetails.isEmpty())
 			this.orderDetails.stream().forEach(
 					orderDetail -> totalAmount += orderDetail.getProduct().getSellPrice() * orderDetail.getQuantity());

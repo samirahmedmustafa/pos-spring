@@ -22,8 +22,12 @@ public class EmployeeService {
 	}
 
 	public Employee getEmployeeById(Integer id) {
-		Employee employee = employeeRepo.findById(id)
-				.orElseThrow(() -> new ItemNotFoundException(String.format("Couldn't find employee with the id %d", id)));
+		Employee employee = employeeRepo.findById(id).get();
+		return employee;
+	}
+	
+	public Employee getEmployeeByAccountId(String accountId) {
+		Employee employee = employeeRepo.getByAccountId(accountId).get();
 		return employee;
 	}
 

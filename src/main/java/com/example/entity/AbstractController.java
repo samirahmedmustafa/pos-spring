@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.example.exception.ItemNotFoundException;
 
 public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> {
@@ -33,7 +35,7 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 		T t = r.findById(id).get();
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
-	
+		
 	@PostMapping
 	public ResponseEntity<T> save(@RequestBody T t) {
 		T savedT = r.save(t);

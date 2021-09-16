@@ -31,15 +31,13 @@ public class OrderDetailController {
 	
 	@GetMapping("byOrder")
 	public ResponseEntity<List<OrderDetail>> findByOrder(@RequestParam Long orderNo) {
-		List<OrderDetail> orderDetails = orderDetailRepo
-				.findByOrder(orderNo).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid order No. %d", orderNo)));
+		List<OrderDetail> orderDetails = orderDetailRepo.findByOrder(orderNo).get();
 		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
 	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<OrderDetail> findById(@PathVariable Long id) {
-		OrderDetail orderDetail = orderDetailRepo.findById(id)
-				.orElseThrow(() -> new ItemNotFoundException(String.format("Find error: Item %s not found", id.toString())));
+		OrderDetail orderDetail = orderDetailRepo.findById(id).get();
 		return new ResponseEntity<>(orderDetail, HttpStatus.OK);
 	}
 	

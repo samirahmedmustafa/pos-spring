@@ -33,7 +33,7 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(unique=true)
-	private String accountName;
+	private String accountId;
 	private String lastName;
 	private String firstName;
 	@Column(unique=true)
@@ -69,13 +69,14 @@ public class Employee implements Serializable {
 		super();
 	}
 
-	public String getAccountName() {
-		return accountName;
+	public String getAccountId() {
+		return accountId;
 	}
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
+
 
 	public String getEmail() {
 		return email;

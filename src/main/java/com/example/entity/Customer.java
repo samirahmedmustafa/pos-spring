@@ -25,6 +25,7 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private String accountId;
 	private String firstName;
 	private String lastName;
 	private String companyName;
@@ -39,6 +40,14 @@ public class Customer implements Serializable {
 
 	public Customer() {
 		super();
+	}
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 
 	public List<Address> getAddresses() {

@@ -31,6 +31,9 @@ public class OrderDetail implements Serializable {
 	private Order order;
 
 	public Long getSubTotal() {
+		System.out.println("product: " + product);
+//		System.out.println("product.name: " + product.getName());
+//		System.out.println("product.price: " + product.getSellPrice());
 		if(product != null)
 			subTotal = quantity * product.getSellPrice();
 		return subTotal;
