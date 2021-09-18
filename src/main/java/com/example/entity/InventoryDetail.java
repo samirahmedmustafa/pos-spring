@@ -39,9 +39,19 @@ public class InventoryDetail implements Serializable {
 	private Long unitPrice;
 	@Temporal(TemporalType.DATE)
 	private Date expirationDate;
+	@Temporal(TemporalType.DATE)
+	private Date issueDate;
 	@Transient
 	private Long subTotal;
 	
+	public Date getIssueDate() {
+		return issueDate;
+	}
+
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
+
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
