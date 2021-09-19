@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import com.example.exception.BusinessException;
 import com.example.exception.ItemNotFoundException;
+import com.example.repository.ProductRepo;
 
 public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> {
 
@@ -32,10 +33,16 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 
 	@GetMapping("{id}")
 	public ResponseEntity<T> findById(@PathVariable ID id) {
-		T t = r.findById(id).get();
+		T t = r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid item id")));
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
-		
+	
+	@GetMapping("byBarcode")
+	public ResponseEntity<Product> findByBarcode(@RequestParam String barcode) {
+		Product product = ((ProductRepo)r).getByBarcode(barcode).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid item barcode")));
+		return new ResponseEntity<>(product, HttpStatus.OK);
+	}
+
 	@PostMapping
 	public ResponseEntity<T> save(@RequestBody T t) {
 		T savedT = r.save(t);
@@ -50,7 +57,7 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> deleteById(@PathVariable ID id) {
-		r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Delete error: Item %s not found", id.toString())));
+		r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Deletion error, invalid id: ", id)));
 		r.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

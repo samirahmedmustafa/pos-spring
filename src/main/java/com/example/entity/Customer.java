@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "customers")
@@ -25,11 +26,11 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String accountId;
 	private String firstName;
 	private String lastName;
 	private String companyName;
 	@Column(unique=true)
+	@NotNull
 	private String phone;
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
@@ -40,14 +41,6 @@ public class Customer implements Serializable {
 
 	public Customer() {
 		super();
-	}
-
-	public String getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
 	}
 
 	public List<Address> getAddresses() {

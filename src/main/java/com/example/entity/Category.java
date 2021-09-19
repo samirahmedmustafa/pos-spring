@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "categories")
@@ -21,6 +22,7 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(unique=true)
+	@NotNull
 	private String name;
 	private String description;
 	@JsonIgnore

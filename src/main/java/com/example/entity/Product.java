@@ -36,7 +36,7 @@ public class Product implements Serializable {
 	private String nameAr;
 	private String img;
 	@Column(unique=true)
-	private String barCode;
+	private String barcode;
 	private String quantityPerUnit;
 	private Float vatPercentage;
 	@Transient
@@ -117,12 +117,12 @@ public class Product implements Serializable {
 		return averageCost;
 	}
 
-	public String getBarCode() {
-		return barCode;
+	public String getBarcode() {
+		return barcode;
 	}
 
-	public void setBarCode(String barCode) {
-		this.barCode = barCode;
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 
 	public Long getSellPrice() {

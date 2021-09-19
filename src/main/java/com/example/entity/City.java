@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "cities")
@@ -30,8 +31,8 @@ public class City implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(unique = true)
+	@NotNull
 	private String name;
-	@Column(unique=true)
 	private String nameAr;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
