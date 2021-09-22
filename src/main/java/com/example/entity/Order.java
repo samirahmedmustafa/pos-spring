@@ -38,6 +38,8 @@ public class Order implements Serializable {
 	private Date shippedDate;
 	@Transient
 	private Long totalAmount;
+	@Transient
+	private String receiptNo;
 	@JsonManagedReference("order-orderdetail")
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
@@ -57,9 +59,16 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderPayment> orderPayments;
 
+	public String getReceiptNo() {
+		return String.format("R%09d", id);
+	}
+
+	public void setReceiptNo(String receiptNo) {
+		this.receiptNo = receiptNo;
+	}
+
 	public Long getTotalAmount() {
 		totalAmount = 0L;
-		System.out.println(orderDetails);
 		if (!this.orderDetails.isEmpty())
 			this.orderDetails.stream().forEach(
 					orderDetail -> totalAmount += orderDetail.getProduct().getSellPrice() * orderDetail.getQuantity());
