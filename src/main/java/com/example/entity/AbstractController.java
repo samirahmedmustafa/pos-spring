@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.exception.BusinessException;
 import com.example.exception.ItemNotFoundException;
+import com.example.repository.InventoryDetailRepo;
 import com.example.repository.ProductRepo;
 
 public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> {
@@ -41,6 +42,12 @@ public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> 
 	public ResponseEntity<Product> findByBarcode(@RequestParam String barcode) {
 		Product product = ((ProductRepo)r).getByBarcode(barcode).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid item barcode")));
 		return new ResponseEntity<>(product, HttpStatus.OK);
+	}
+	
+	@GetMapping("byInventory")
+	public ResponseEntity<List<InventoryDetail>> findByInventory(@RequestParam Long inventory) {
+		List<InventoryDetail> inventoryDetails = ((InventoryDetailRepo)r).getByInventory(inventory).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid inventory")));
+		return new ResponseEntity<>(inventoryDetails, HttpStatus.OK);
 	}
 
 	@PostMapping
