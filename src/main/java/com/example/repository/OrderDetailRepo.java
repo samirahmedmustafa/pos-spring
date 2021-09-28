@@ -8,5 +8,5 @@ import com.example.entity.OrderDetail;
 
 public interface OrderDetailRepo extends JpaRepository<OrderDetail, Long> {
 	@Query("select od from OrderDetail od where od.order.id = ?1")
-	Optional<List<OrderDetail>> findByOrder(Long order);
+	Optional<List<OrderDetail>> getByOrder(Long order);
 }

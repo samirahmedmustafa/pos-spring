@@ -15,49 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.exception.ItemNotFoundException;
 import com.example.repository.OrderDetailRepo;
+import com.example.service.AbstractService;
+import com.example.service.OrderDetailService;
 
 @RestController
 @RequestMapping("orderDetails")
-public class OrderDetailController {
+public class OrderDetailController extends AbstractController<OrderDetail, Long> {
 
-	@Autowired
-	private OrderDetailRepo orderDetailRepo;
-	
-	@GetMapping
-	public ResponseEntity<List<OrderDetail>> findAll() {
-		List<OrderDetail> orderDetails = orderDetailRepo.findAll();
-		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
-	}
-	
-	@GetMapping("byOrder")
-	public ResponseEntity<List<OrderDetail>> findByOrder(@RequestParam Long orderNo) {
-		List<OrderDetail> orderDetails = orderDetailRepo.findByOrder(orderNo).get();
-		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
+	public OrderDetailController(OrderDetailService service) {
+		super(service);
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<OrderDetail> findById(@PathVariable Long id) {
-		OrderDetail orderDetail = orderDetailRepo.findById(id).get();
-		return new ResponseEntity<>(orderDetail, HttpStatus.OK);
-	}
-	
-	@PostMapping
-	public ResponseEntity<OrderDetail> save(@RequestBody OrderDetail orderDetail) {
-		OrderDetail savedOrderDetail = orderDetailRepo.save(orderDetail);
-		return new ResponseEntity<>(savedOrderDetail, HttpStatus.CREATED);
-	}
-
-	@PutMapping("{id}")
-	public ResponseEntity<OrderDetail> update(@RequestBody OrderDetail orderDetail, @PathVariable Long id) {
-		orderDetailRepo.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Update error: Item %s not found", id.toString())));
-		OrderDetail updatedOrderDetail = orderDetailRepo.save(orderDetail);
-		return new ResponseEntity<>(updatedOrderDetail, HttpStatus.OK);
-	}
-
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		orderDetailRepo.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Delete error: Item %s not found", id.toString())));
-		orderDetailRepo.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 }

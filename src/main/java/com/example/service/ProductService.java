@@ -8,14 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entity.Employee;
+import com.example.entity.Product;
 import com.example.exception.ItemNotFoundException;
 import com.example.repository.EmployeeRepo;
+import com.example.repository.ProductRepo;
 
 @Service
 @Transactional
-public class EmployeeService extends AbstractService<Employee, Integer> {
+public class ProductService extends AbstractService<Product, Long> {
 
-	public EmployeeService(EmployeeRepo repository) {
+	public ProductService(ProductRepo repository) {
 		super(repository);
 	}
 }

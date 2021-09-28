@@ -3,13 +3,14 @@ package com.example.entity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.repository.OrderPaymentRepo;
+import com.example.service.AbstractService;
+import com.example.service.OrderPaymentService;
 
 @RestController
 @RequestMapping("orderPayments")
-public class OrderPaymentController extends AbstractController<OrderPaymentRepo, OrderPayment, Long> {
+public class OrderPaymentController extends AbstractController<OrderPayment, Long> {
 
-	public OrderPaymentController(OrderPaymentRepo r) {
-		super(r);
-		// TODO Auto-generated constructor stub
+	public OrderPaymentController(OrderPaymentService service) {
+		super(service);
 	}
 }

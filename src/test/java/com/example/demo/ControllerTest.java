@@ -12,8 +12,8 @@ class ControllerTest {
 	
 	@Test
 	void testSupplier() {
-		SupplierController controller = new SupplierController(supplierRepo);
-		System.out.println("testing..************" + controller.findAll());
+//		SupplierController controller = new SupplierController(supplierRepo);
+//		System.out.println("testing..************" + controller.findAll());
 	}
 
 }

@@ -1,8 +1,8 @@
 package com.example.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "products")
@@ -38,13 +33,14 @@ public class Product implements Serializable {
 	@Column(unique=true)
 	private String barcode;
 	private String quantityPerUnit;
-	private Float vatPercentage;
+	private BigDecimal vatPercentage;
 	@Transient
-	private Float vatValue;
-	private Long sellPrice;
+	private BigDecimal vatValue;
+	private BigDecimal sellPrice;
+	private BigDecimal depreciation;
 	private Integer quantity;
-	private Long discount;
-	private Double averageCost;
+	private BigDecimal discount;
+	private BigDecimal averageCost;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Category category;
@@ -58,6 +54,14 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 
+	public BigDecimal getDepreciation() {
+		return depreciation;
+	}
+
+	public void setDepreciation(BigDecimal depreciation) {
+		this.depreciation = depreciation;
+	}
+
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
 	}
@@ -66,11 +70,11 @@ public class Product implements Serializable {
 		this.orderDetails = orderDetails;
 	}
 
-	public void setVatValue(Float vatValue) {
+	public void setVatValue(BigDecimal vatValue) {
 		this.vatValue = vatValue;
 	}
 
-	public void setAverageCost(Double averageCost) {
+	public void setAverageCost(BigDecimal averageCost) {
 		this.averageCost = averageCost;
 	}
 
@@ -91,29 +95,29 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Long getDiscount() {
+	public BigDecimal getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(Long discount) {
+	public void setDiscount(BigDecimal discount) {
 		this.discount = discount;
 	}
 
-	public Float getVatPercentage() {
+	public BigDecimal getVatPercentage() {
 		return vatPercentage;
 	}
 
-	public void setVatPercentage(Float vatPercentage) {
+	public void setVatPercentage(BigDecimal vatPercentage) {
 		this.vatPercentage = vatPercentage;
 	}
 
-	public Float getVatValue() {
+	public BigDecimal getVatValue() {
 		if (vatPercentage != null)
-			return (sellPrice * vatPercentage) / 100;
+			return sellPrice.multiply(vatPercentage).divide(BigDecimal.valueOf(100));
 		return vatValue;
 	}
 
-	public Double getAverageCost() {
+	public BigDecimal getAverageCost() {
 		return averageCost;
 	}
 
@@ -125,11 +129,11 @@ public class Product implements Serializable {
 		this.barcode = barcode;
 	}
 
-	public Long getSellPrice() {
+	public BigDecimal getSellPrice() {
 		return sellPrice;
 	}
 
-	public void setSellPrice(Long sellPrice) {
+	public void setSellPrice(BigDecimal sellPrice) {
 		this.sellPrice = sellPrice;
 	}
 

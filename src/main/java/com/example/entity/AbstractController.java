@@ -15,57 +15,67 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.exception.BusinessException;
 import com.example.exception.ItemNotFoundException;
 import com.example.repository.InventoryDetailRepo;
+import com.example.repository.OrderDetailRepo;
 import com.example.repository.ProductRepo;
+import com.example.service.AbstractService;
+import com.example.service.InventoryDetailService;
+import com.example.service.OrderDetailService;
+import com.example.service.ProductService;
 
-public abstract class AbstractController<R extends JpaRepository<T, ID>, T, ID> {
+public abstract class AbstractController<T, ID> {
 
-	private R r;
+	private AbstractService<T, ID> service;
 
-	public AbstractController(R r) {
+	public AbstractController(AbstractService<T, ID> service) {
 		super();
-		this.r = r;
+		this.service = service;
 	}
 
 	@GetMapping
 	public ResponseEntity<List<T>> findAll() {
-		List<T> ts = r.findAll();
+		List<T> ts = service.getAll();
 		return new ResponseEntity<>(ts, HttpStatus.OK);
 	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<T> findById(@PathVariable ID id) {
-		T t = r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid item id")));
+		T t = service.getById(id);
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("byBarcode")
 	public ResponseEntity<Product> findByBarcode(@RequestParam String barcode) {
-		Product product = ((ProductRepo)r).getByBarcode(barcode).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid item barcode")));
+		Product product = ((ProductService) service).getByBarcode(barcode);
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("byInventory")
-	public ResponseEntity<List<InventoryDetail>> findByInventory(@RequestParam Long inventory) {
-		List<InventoryDetail> inventoryDetails = ((InventoryDetailRepo)r).getByInventory(inventory).orElseThrow(() -> new ItemNotFoundException(String.format("Invalid inventory")));
+	public ResponseEntity<List<InventoryDetail>> getByInventory(@RequestParam Long inventory) {
+		List<InventoryDetail> inventoryDetails = ((InventoryDetailService) service).getByInventory(inventory);
 		return new ResponseEntity<>(inventoryDetails, HttpStatus.OK);
+	}
+
+	@GetMapping("byOrder")
+	public ResponseEntity<List<OrderDetail>> findByOrder(@RequestParam Long orderNo) {
+		List<OrderDetail> orderDetails = ((OrderDetailService) service).getByOrder(orderNo);
+		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<T> save(@RequestBody T t) {
-		T savedT = r.save(t);
+		T savedT = service.save(t);
 		return new ResponseEntity<>(savedT, HttpStatus.CREATED);
 	}
 
 	@PutMapping("{id}")
 	public ResponseEntity<T> update(@RequestBody T t, @PathVariable ID id) {
-		T updatedT = r.save(t);
+		T updatedT = service.save(t);
 		return new ResponseEntity<>(updatedT, HttpStatus.OK);
 	}
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> deleteById(@PathVariable ID id) {
-		r.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("Deletion error, invalid id: ", id)));
-		r.deleteById(id);
+		service.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

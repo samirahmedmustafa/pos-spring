@@ -1,21 +1,21 @@
 package com.example.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.example.entity.Employee;
+import com.example.entity.Customer;
+import com.example.entity.Order;
 import com.example.exception.ItemNotFoundException;
-import com.example.repository.EmployeeRepo;
+import com.example.repository.CustomerRepo;
+import com.example.repository.OrderRepo;
 
 @Service
 @Transactional
-public class EmployeeService extends AbstractService<Employee, Integer> {
+public class OrderService extends AbstractService<Order, Long> {
 
-	public EmployeeService(EmployeeRepo repository) {
+	public OrderService(OrderRepo repository) {
 		super(repository);
 	}
 }

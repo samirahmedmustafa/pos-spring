@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class Order implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date shippedDate;
 	@Transient
-	private Long totalAmount;
+	private BigDecimal totalAmount;
 	@Transient
 	private String receiptNo;
 	@JsonManagedReference("order-orderdetail")
@@ -67,11 +68,11 @@ public class Order implements Serializable {
 		this.receiptNo = receiptNo;
 	}
 
-	public Long getTotalAmount() {
-		totalAmount = 0L;
+	public BigDecimal getTotalAmount() {
+		totalAmount = BigDecimal.ZERO;
 		if (!this.orderDetails.isEmpty())
-			this.orderDetails.stream().forEach(
-					orderDetail -> totalAmount += orderDetail.getProduct().getSellPrice() * orderDetail.getQuantity());
+			this.orderDetails.stream().forEach(orderDetail -> totalAmount = totalAmount.add(
+					orderDetail.getProduct().getSellPrice().multiply(BigDecimal.valueOf(orderDetail.getQuantity()))));
 		return totalAmount;
 	}
 
@@ -83,7 +84,7 @@ public class Order implements Serializable {
 		this.orderPayments = orderPayments;
 	}
 
-	public void setTotalAmount(Long totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 

@@ -15,49 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.service.AbstractService;
 import com.example.service.EmployeeService;
 
 @RestController
 @RequestMapping("employees")
-public class EmployeeController {
+public class EmployeeController extends AbstractController<Employee, Integer>{
 
-	@Autowired
-	private EmployeeService employeeService;
-
-	@GetMapping
-	public ResponseEntity<List<Employee>> getEmployees() {
-		List<Employee> employees = employeeService.getEmployees();
-		return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
+	public EmployeeController(EmployeeService service) {
+		super(service);
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<Employee> getEmployee(@PathVariable Integer id) {
-		Employee employee = employeeService.getEmployeeById(id);
-		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-	}
-
-	@GetMapping("byAccountId")
-	public ResponseEntity<Employee> getEmployee(@RequestParam String accountId) {
-		Employee employee = employeeService.getEmployeeByAccountId(accountId);
-		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-	}
-
-	@PostMapping
-	public ResponseEntity<Employee> save(@RequestBody Employee employee) {
-		Employee savedEmployee = employeeService.save(employee);
-		return new ResponseEntity<Employee>(savedEmployee, HttpStatus.CREATED);
-	}
-
-	@PutMapping("{id}")
-	public ResponseEntity<Employee> update(@RequestBody Employee employee, @PathVariable Integer id) {
-		Employee updatedEmployee = employeeService.update(employee, id);
-		return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
-	}
-
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer id) {
-		employeeService.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
+	
 }

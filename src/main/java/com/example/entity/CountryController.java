@@ -3,12 +3,14 @@ package com.example.entity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.repository.CountryRepo;
+import com.example.service.AbstractService;
+import com.example.service.CountryService;
 
 @RestController
 @RequestMapping("countries")
-public class CountryController extends AbstractController<CountryRepo, Country, Integer> {
+public class CountryController extends AbstractController<Country, Integer> {
 
-	public CountryController(CountryRepo r) {
-		super(r);
+	public CountryController(CountryService service) {
+		super(service);
 	}
 }

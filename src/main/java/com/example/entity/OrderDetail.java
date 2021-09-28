@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class OrderDetail implements Serializable {
 	private Long id;
 	private Integer quantity;
 	@Transient
-	private Long subTotal;
+	private BigDecimal subTotal;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
@@ -30,12 +31,12 @@ public class OrderDetail implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
 
-	public Long getSubTotal() {
-		System.out.println("product: " + product);
+	public BigDecimal getSubTotal() {
+//		System.out.println("product: " + product);
 //		System.out.println("product.name: " + product.getName());
 //		System.out.println("product.price: " + product.getSellPrice());
 		if(product != null)
-			subTotal = quantity * product.getSellPrice();
+			subTotal = product.getSellPrice().multiply(BigDecimal.valueOf(quantity));
 		return subTotal;
 	}
 
@@ -47,7 +48,7 @@ public class OrderDetail implements Serializable {
 		this.product = product;
 	}
 
-	public void setSubTotal(Long subTotal) {
+	public void setSubTotal(BigDecimal subTotal) {
 		this.subTotal = subTotal;
 	}
 
