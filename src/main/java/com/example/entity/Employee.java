@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -91,7 +93,8 @@ public class Employee implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = new BCryptPasswordEncoder().encode(password);
+//		this.password = password;
 	}
 
 	public Boolean getInActive() {

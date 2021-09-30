@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class })
+//@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication
 @ComponentScan({ "com.example" })
 @EntityScan("com.example.entity")
 @EnableJpaRepositories({"com.example.service", "com.example.repository"})

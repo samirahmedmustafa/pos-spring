@@ -1,6 +1,8 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.City;
+import com.example.entity.Employee;
 import com.example.entity.InventoryDetail;
 import com.example.entity.OrderDetail;
 import com.example.entity.Product;
 import com.example.exception.ItemNotFoundException;
 import com.example.repository.CityRepo;
+import com.example.repository.EmployeeRepo;
 import com.example.repository.InventoryDetailRepo;
 import com.example.repository.OrderDetailRepo;
 import com.example.repository.ProductRepo;
@@ -36,6 +40,11 @@ public class AbstractService<T, ID> {
 		T t = repository.findById(id)
 				.orElseThrow(() -> new ItemNotFoundException(String.format("Couldn't find item with the id %d", id)));
 		return t;
+	}
+
+	public Employee getByAccountId(String accountId) {
+		return ((EmployeeRepo) repository).getByAccountId(accountId).orElseThrow(
+				() -> new ItemNotFoundException(String.format("Couldn't find item with the accountId %s", accountId)));
 	}
 
 	public List<OrderDetail> getByOrder(Long orderNo) {
