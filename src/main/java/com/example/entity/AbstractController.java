@@ -1,10 +1,11 @@
 package com.example.entity;
 
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,17 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.example.exception.BusinessException;
-import com.example.exception.ItemNotFoundException;
-import com.example.repository.InventoryDetailRepo;
-import com.example.repository.OrderDetailRepo;
-import com.example.repository.ProductRepo;
 import com.example.service.AbstractService;
 import com.example.service.InventoryDetailService;
 import com.example.service.OrderDetailService;
 import com.example.service.ProductService;
 
 public abstract class AbstractController<T, ID> {
+
+	private static final Logger logger = LoggerFactory.getLogger(AbstractController.class);
 
 	private AbstractService<T, ID> service;
 
@@ -56,7 +54,7 @@ public abstract class AbstractController<T, ID> {
 	}
 
 	@GetMapping("byOrder")
-	public ResponseEntity<List<OrderDetail>> findByOrder(@RequestParam Long orderNo) {
+	public ResponseEntity<?> findByOrder(@RequestParam Long orderNo) {
 		List<OrderDetail> orderDetails = ((OrderDetailService) service).getByOrder(orderNo);
 		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
 	}

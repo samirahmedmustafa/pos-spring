@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemNotFoundException extends RuntimeException {
+public class DatabaseConstraintException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	private String message;
