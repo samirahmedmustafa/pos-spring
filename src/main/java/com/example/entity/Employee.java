@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "employees")
@@ -34,12 +35,13 @@ public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String accountId;
 	private String lastName;
 	private String firstName;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
+	@Column(nullable = false)
 	private String password;
 	private Boolean inActive;
 	private String title;
@@ -79,7 +81,6 @@ public class Employee implements Serializable {
 		this.accountId = accountId;
 	}
 
-
 	public String getEmail() {
 		return email;
 	}
@@ -93,8 +94,7 @@ public class Employee implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = new BCryptPasswordEncoder().encode(password);
-//		this.password = password;
+		this.password = password;
 	}
 
 	public Boolean getInActive() {

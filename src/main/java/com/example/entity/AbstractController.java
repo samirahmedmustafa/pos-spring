@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.service.AbstractService;
+import com.example.service.CountryService;
+import com.example.service.EmployeeService;
 import com.example.service.InventoryDetailService;
 import com.example.service.OrderDetailService;
 import com.example.service.ProductService;
@@ -47,8 +49,26 @@ public abstract class AbstractController<T, ID> {
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
 
+	@GetMapping("byName")
+	public ResponseEntity<Boolean> findCountryByName(@RequestParam String name) {
+		Boolean isExist = ((CountryService) service).isCountryNameExists(name);
+		return new ResponseEntity<>(isExist, HttpStatus.OK);
+	}
+
+	@GetMapping("byAccountId")
+	public ResponseEntity<Employee> findByAccountId(@RequestParam String accountId) {
+		Employee employee = ((EmployeeService) service).getByAccountId(accountId);
+		return new ResponseEntity<>(employee, HttpStatus.OK);
+	}
+
+	@GetMapping("byEmail")
+	public ResponseEntity<Employee> findByEmail(@RequestParam String email) {
+		Employee employee = ((EmployeeService) service).getByEmail(email);
+		return new ResponseEntity<>(employee, HttpStatus.OK);
+	}
+
 	@GetMapping("byInventory")
-	public ResponseEntity<List<InventoryDetail>> getByInventory(@RequestParam Long inventory) {
+	public ResponseEntity<List<InventoryDetail>> getByInventoryDetails(@RequestParam Long inventory) {
 		List<InventoryDetail> inventoryDetails = ((InventoryDetailService) service).getByInventory(inventory);
 		return new ResponseEntity<>(inventoryDetails, HttpStatus.OK);
 	}
@@ -67,7 +87,7 @@ public abstract class AbstractController<T, ID> {
 
 	@PutMapping("{id}")
 	public ResponseEntity<T> update(@RequestBody T t, @PathVariable ID id) {
-		T updatedT = service.save(t);
+		T updatedT = service.update(t, id);
 		return new ResponseEntity<>(updatedT, HttpStatus.OK);
 	}
 
