@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.exception.DatabaseConstraintException;
 import com.example.service.AbstractService;
 import com.example.service.CountryService;
+import com.example.service.CustomerService;
 import com.example.service.EmployeeService;
 import com.example.service.InventoryDetailService;
 import com.example.service.OrderDetailService;
@@ -56,15 +59,33 @@ public abstract class AbstractController<T, ID> {
 	}
 
 	@GetMapping("byAccountId")
-	public ResponseEntity<Employee> findByAccountId(@RequestParam String accountId) {
-		Employee employee = ((EmployeeService) service).getByAccountId(accountId);
-		return new ResponseEntity<>(employee, HttpStatus.OK);
+	public ResponseEntity<?> findByAccountId(@RequestParam String accountId) {
+		try {
+			Employee employee = ((EmployeeService) service).getByAccountId(accountId);
+			return new ResponseEntity<>(employee, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
 	}
 
 	@GetMapping("byEmail")
-	public ResponseEntity<Employee> findByEmail(@RequestParam String email) {
-		Employee employee = ((EmployeeService) service).getByEmail(email);
-		return new ResponseEntity<>(employee, HttpStatus.OK);
+	public ResponseEntity<?> findByEmail(@RequestParam String email) {
+		try {
+			Employee employee = ((EmployeeService) service).getByEmail(email);
+			return new ResponseEntity<>(employee, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("byPhone")
+	public ResponseEntity<Customer> findByPhone(@RequestParam String phone) {
+		Customer customer = ((CustomerService) service).getByPhone(phone);
+		return new ResponseEntity<>(customer, HttpStatus.OK);
 	}
 
 	@GetMapping("byInventory")
