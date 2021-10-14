@@ -57,6 +57,18 @@ public abstract class AbstractController<T, ID> {
 		Boolean isExist = ((CountryService) service).isCountryNameExists(name);
 		return new ResponseEntity<>(isExist, HttpStatus.OK);
 	}
+	
+	@GetMapping("byProductName")
+	public ResponseEntity<?> findProductByName(@RequestParam String name) {
+		try {
+			Product product = ((ProductService) service).getProductByName(name);
+			return new ResponseEntity<>(product, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
+	}
 
 	@GetMapping("byAccountId")
 	public ResponseEntity<?> findByAccountId(@RequestParam String accountId) {

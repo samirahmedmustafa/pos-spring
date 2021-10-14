@@ -70,6 +70,11 @@ public class AbstractService<T, ID> {
 				.message(String.format("Email %s not found", email)).build());
 	}
 	
+	public Product getProductByName(String name) {
+		return ((ProductRepo) repository).getByName(name).orElseThrow(() -> DatabaseConstraintException.builder()
+				.message(String.format("Invalid Product name %s", name)).build());
+	}
+	
 	public Customer getByPhone(String phone) {
 		return ((CustomerRepo) repository).getByPhone(phone).orElseThrow(() -> DatabaseConstraintException.builder()
 				.message(String.format("No record with the phone %s", phone)).build());
