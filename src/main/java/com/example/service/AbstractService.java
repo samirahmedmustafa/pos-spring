@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,20 +62,33 @@ public class AbstractService<T, ID> {
 	}
 
 	public Employee getByAccountId(String accountId) {
-		return ((EmployeeRepo) repository).getByAccountId(accountId).orElseThrow(() -> DatabaseConstraintException.builder()
-				.message(String.format("Account id %s not found", accountId)).build());
+		return ((EmployeeRepo) repository).getByAccountId(accountId).orElseThrow(() -> DatabaseConstraintException
+				.builder().message(String.format("Account id %s not found", accountId)).build());
+	}
+
+	public Employee login(Employee employee) {
+
+		Employee existingEmployee = ((EmployeeRepo) repository).getByAccountId(employee.getAccountId()).orElseThrow(() -> DatabaseConstraintException.builder()
+				.message(String.format("Invalid accountId or password")).build());
+				
+		if(!BCrypt.checkpw(employee.getPassword(), existingEmployee.getPassword()))
+			throw DatabaseConstraintException.builder()
+			.message(String.format("Invalid accountId or password")).build();
+		
+		return existingEmployee;
+			
 	}
 
 	public Employee getByEmail(String email) {
 		return ((EmployeeRepo) repository).getByEmail(email).orElseThrow(() -> DatabaseConstraintException.builder()
 				.message(String.format("Email %s not found", email)).build());
 	}
-	
+
 	public Product getProductByName(String name) {
 		return ((ProductRepo) repository).getByName(name).orElseThrow(() -> DatabaseConstraintException.builder()
 				.message(String.format("Invalid Product name %s", name)).build());
 	}
-	
+
 	public Customer getByPhone(String phone) {
 		return ((CustomerRepo) repository).getByPhone(phone).orElseThrow(() -> DatabaseConstraintException.builder()
 				.message(String.format("No record with the phone %s", phone)).build());
@@ -103,9 +117,9 @@ public class AbstractService<T, ID> {
 		Boolean isExist = ((CountryRepo) repository).getCountryByName(name).isPresent();
 
 		if (isExist)
-			return true;
-//			throw DatabaseConstraintException.builder().message(String.format("Country is already exists %s", name))
-//					.build();
+//			return true;
+			throw DatabaseConstraintException.builder().message(String.format("Country is already exists %s", name))
+					.build();
 
 		return false;
 	}
@@ -128,11 +142,6 @@ public class AbstractService<T, ID> {
 		Country country = ((CountryRepo) repository).getCountryByCode(code).get();
 		return country;
 	}
-
-//	public Country getCountryByName(String name) {
-//		Country country = ((CountryRepo) repository).getCountryByName(name).get();
-//		return country;
-//	}
 
 	public Boolean isCountryCodeExist(String code) {
 		Boolean isCodeExist = ((CountryRepo) repository).getCountryByCode(code).isPresent();
@@ -176,8 +185,12 @@ public class AbstractService<T, ID> {
 		return true;
 	}
 
-	private String encryptPassword(T t) {
-		return (new BCryptPasswordEncoder().encode((((Employee) t).getPassword())));
+	private String encryptPassword(String password) {
+		logger.error("encrypt: " + password);
+//		String encrypted = new BCryptPasswordEncoder().encode(password);
+		String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
+		logger.error("encrypt encrypted: " + hashedPassword);
+		return hashedPassword;
 	}
 
 	public void validateCustomerPhone(T t) {
@@ -209,7 +222,8 @@ public class AbstractService<T, ID> {
 			isEmployeeAccountIdExist((((Employee) t).getAccountId()));
 			isPasswordValid((((Employee) t).getPassword()));
 			isEmailValid(t);
-			((Employee) t).setPassword(encryptPassword(t));
+
+			((Employee) t).setPassword(encryptPassword(((Employee) t).getPassword()));
 		}
 
 		if (t instanceof Customer) {
@@ -233,6 +247,9 @@ public class AbstractService<T, ID> {
 
 		if (t instanceof Employee) {
 			isPasswordValid((((Employee) t).getPassword()));
+			isEmailValid(t);
+
+			((Employee) t).setPassword(encryptPassword(((Employee) t).getPassword()));
 		}
 
 		repository.findById(id).orElseThrow(() -> DatabaseConstraintException.builder()

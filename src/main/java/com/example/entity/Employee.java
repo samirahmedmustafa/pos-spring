@@ -38,6 +38,7 @@ public class Employee implements Serializable {
 	@Column(unique = true)
 	private String accountId;
 	private String lastName;
+	private String role;
 	private String firstName;
 	@Column(unique = true)
 	private String email;
@@ -71,6 +72,14 @@ public class Employee implements Serializable {
 
 	public Employee() {
 		super();
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getAccountId() {

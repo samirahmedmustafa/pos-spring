@@ -81,6 +81,19 @@ public abstract class AbstractController<T, ID> {
 			return new ResponseEntity<>(e, HttpStatus.OK);
 		}
 	}
+	
+	@PostMapping("login")
+	public ResponseEntity<?> login(@RequestBody Employee employee) {
+				
+		try {
+			Employee loggedInemployee = ((EmployeeService) service).login(employee);
+			return new ResponseEntity<>(loggedInemployee, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
+	}
 
 	@GetMapping("byEmail")
 	public ResponseEntity<?> findByEmail(@RequestParam String email) {
