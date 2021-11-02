@@ -38,9 +38,8 @@ public class Employee implements Serializable {
 	@Column(unique = true)
 	private String accountId;
 	private String lastName;
-	private String role;
 	private String firstName;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 	@Column(nullable = false)
 	private String password;
@@ -51,6 +50,8 @@ public class Employee implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date hireDate;
 	private String address;
+	@ManyToOne
+	private Role role;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private City city;
@@ -74,11 +75,11 @@ public class Employee implements Serializable {
 		super();
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

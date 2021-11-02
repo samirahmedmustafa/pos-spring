@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.exception.DatabaseConstraintException;
 import com.example.service.AbstractService;
+import com.example.service.CityService;
 import com.example.service.CountryService;
 import com.example.service.CustomerService;
 import com.example.service.EmployeeService;
 import com.example.service.InventoryDetailService;
 import com.example.service.OrderDetailService;
 import com.example.service.ProductService;
+import com.example.service.RoleService;
 
 public abstract class AbstractController<T, ID> {
 
@@ -57,7 +59,7 @@ public abstract class AbstractController<T, ID> {
 		Boolean isExist = ((CountryService) service).isCountryNameExists(name);
 		return new ResponseEntity<>(isExist, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("byProductName")
 	public ResponseEntity<?> findProductByName(@RequestParam String name) {
 		try {
@@ -82,15 +84,41 @@ public abstract class AbstractController<T, ID> {
 		}
 	}
 	
+	@GetMapping("byRoleName")
+	public ResponseEntity<?> getByRoleName(@RequestParam String name) {
+		try {
+			Role role = ((RoleService) service).getByRoleName(name);
+			return new ResponseEntity<>(role, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("byCountryName")
+	public ResponseEntity<?> getCitiesByCountry(@RequestParam String name) {
+		try {
+			List<City> cities = ((CityService) service).getCitiesByCountry(name);
+			return new ResponseEntity<>(cities, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
+	}
+
 	@PostMapping("login")
 	public ResponseEntity<?> login(@RequestBody Employee employee) {
-				
+
 		try {
 			Employee loggedInemployee = ((EmployeeService) service).login(employee);
 			return new ResponseEntity<>(loggedInemployee, HttpStatus.OK);
 		} catch (DatabaseConstraintException e) {
+			logger.error("login DatabaseConstraintException: " + e);
 			return new ResponseEntity<>(e, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("login Exception: " + e);
 			return new ResponseEntity<>(e, HttpStatus.OK);
 		}
 	}
@@ -106,7 +134,7 @@ public abstract class AbstractController<T, ID> {
 			return new ResponseEntity<>(e, HttpStatus.OK);
 		}
 	}
-	
+
 	@GetMapping("byPhone")
 	public ResponseEntity<Customer> findByPhone(@RequestParam String phone) {
 		Customer customer = ((CustomerService) service).getByPhone(phone);
@@ -126,21 +154,39 @@ public abstract class AbstractController<T, ID> {
 	}
 
 	@PostMapping
-	public ResponseEntity<T> save(@RequestBody T t) {
-		T savedT = service.save(t);
-		return new ResponseEntity<>(savedT, HttpStatus.CREATED);
+	public ResponseEntity<?> save(@RequestBody T t) {
+		try {
+			T saved = service.save(t);
+			return new ResponseEntity<>(saved, HttpStatus.CREATED);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<T> update(@RequestBody T t, @PathVariable ID id) {
-		T updatedT = service.update(t, id);
-		return new ResponseEntity<>(updatedT, HttpStatus.OK);
+	public ResponseEntity<?> update(@RequestBody T t, @PathVariable ID id) {
+		try {
+			T updated = service.update(t, id);
+			return new ResponseEntity<>(updated, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> deleteById(@PathVariable ID id) {
-		service.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		try {
+			service.deleteById(id);
+			return new ResponseEntity<>(id, HttpStatus.OK);
+		} catch (DatabaseConstraintException e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e, HttpStatus.OK);
+		}
 	}
 
 }
