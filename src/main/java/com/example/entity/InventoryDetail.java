@@ -113,4 +113,16 @@ public class InventoryDetail implements Serializable {
 		super();
 	}
 
+	public InventoryDetail(Integer id, Product product, Inventory inventory, Integer quantity, Long unitPrice,
+			Date expiryDate, Date manufacturingDate) {
+		super();
+		this.id = id;
+		this.product = product;
+		this.inventory = inventory;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.expiryDate = expiryDate;
+		this.manufacturingDate = manufacturingDate;
+	}
+
 }

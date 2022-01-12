@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "employees")
@@ -34,12 +35,13 @@ public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String accountId;
 	private String lastName;
 	private String firstName;
-	@Column(unique=true)
+	@Column(unique = true, nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String password;
 	private Boolean inActive;
 	private String title;
@@ -48,6 +50,8 @@ public class Employee implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date hireDate;
 	private String address;
+	@ManyToOne
+	private Role role;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private City city;
@@ -71,6 +75,14 @@ public class Employee implements Serializable {
 		super();
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public String getAccountId() {
 		return accountId;
 	}
@@ -78,7 +90,6 @@ public class Employee implements Serializable {
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
-
 
 	public String getEmail() {
 		return email;
@@ -93,8 +104,7 @@ public class Employee implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = new BCryptPasswordEncoder().encode(password);
-//		this.password = password;
+		this.password = password;
 	}
 
 	public Boolean getInActive() {

@@ -103,4 +103,14 @@ public class Inventory implements Serializable {
 		super();
 	}
 
+	public Inventory(Long id, Long totalAmount, Date inventoryDate, List<InventoryDetail> inventoryDetails,
+			List<InventoryPayment> inventoryPayments) {
+		super();
+		this.id = id;
+		this.totalAmount = totalAmount;
+		this.inventoryDate = inventoryDate;
+		this.inventoryDetails = inventoryDetails;
+		this.inventoryPayments = inventoryPayments;
+	}
+
 }
