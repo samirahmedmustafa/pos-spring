@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.entity.City;
 
 public interface CityRepo extends JpaRepository<City, Integer> {
-	@Query("select c from City c where c.country.name = ?1")
-	Optional<List<City>> findCitiesByCountry(String country);
+//	@Query("select c from City c where c.country.name = ?1")
+	List<City> findByCountry(String country);
 }

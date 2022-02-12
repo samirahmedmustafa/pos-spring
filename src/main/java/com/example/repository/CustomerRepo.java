@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.entity.Customer;
 
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
-	@Query("select c from Customer c where c.phone = ?1")
-	Optional<Customer> getByPhone(String phone);
+//	@Query("select c from Customer c where c.phone = ?1")
+	Customer findByPhone(String phone);
 }
