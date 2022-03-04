@@ -38,7 +38,7 @@ public class Expense implements Serializable {
 	private Date expenseDate;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	private Employee employee;
+	private User user;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private ExpenseType expenseType;
@@ -78,12 +78,12 @@ public class Expense implements Serializable {
 		this.amount = amount;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public User getUser() {
+		return user;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Long getId() {

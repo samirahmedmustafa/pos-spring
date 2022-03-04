@@ -27,7 +27,7 @@ public class Neighbourhood implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	@Column(unique = true)
 	private String name;
 	@Column(unique = true)
@@ -37,17 +37,17 @@ public class Neighbourhood implements Serializable {
 	private List<Address> addresses;
 	@JsonIgnore
 	@OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL)
-	private List<Employee> employees;
+	private List<User> users;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private City city;
 
-	public List<Employee> getEmployees() {
-		return employees;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	public String getNameAr() {
@@ -74,11 +74,11 @@ public class Neighbourhood implements Serializable {
 		this.city = city;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -18,76 +18,41 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateCountryException;
 import com.example.exception.ExceptionHandling;
+import com.example.exception.InvalidUserOrRoleException;
 import com.example.service.PosService;
+import com.example.service.UserService;
+
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class PosController<T, ID> extends ExceptionHandling {
+@RestController
+@RequestMapping(path = { "/", "/api/users" })
+public class UserController extends PosController<User, Long> {
 
-	private final PosService<T, ID> service;
+	private final UserService service;
 
-	public PosController(PosService<T, ID> service) {
-		super();
+	public UserController(UserService service) {
+		super(service);
 		this.service = service;
 	}
 
-	@GetMapping
-	public ResponseEntity<List<T>> findItems() {
-		List<T> t = service.findAll();
-		log.info("users: {}", t);
-		return new ResponseEntity<>(t, HttpStatus.OK);
+	@PostMapping("addUserRole")
+	public ResponseEntity<?> addUserRole(@RequestParam String username, @RequestParam String roleName) throws InvalidUserOrRoleException {
+		log.info("username: {}", username);
+		log.info("roleName: {}", roleName);
+		service.addUserRole(username, roleName);
+		return new ResponseEntity<>(HttpStatus.OK);		
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<T> findById(@PathVariable ID id) {
-		T t = service.findById(id);
-		return new ResponseEntity<>(t, HttpStatus.OK);
+	@GetMapping("byUsername")
+	public ResponseEntity<User> findUserByUsername(@RequestParam String username) {
+		User user = service.findUserByUsername(username);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<T> update(@RequestBody T t) {
-		T updated = service.update(t);
-		return new ResponseEntity<>(updated, HttpStatus.OK);
-	}
-	
-	@PostMapping
-	public ResponseEntity<?> save(@RequestBody T t) {
-		T saved = service.save(t);
-		return new ResponseEntity<>(saved, HttpStatus.OK);
-	}
-
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> deleteById(@PathVariable ID id) {
-		service.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-//	@GetMapping("countries/byName")
-//	public ResponseEntity<Country> findCountryByName(@RequestParam String name) throws DuplicateCountryException {
-//		Country country = service.findCountryByName(name);
-//		return new ResponseEntity<>(country, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("products/byProductName")
-//	public ResponseEntity<Product> findProductByName(@RequestParam String name) {
-//		Product product = service.findProductByName(name);
-//		return new ResponseEntity<>(product, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("users/byUsername")
-//	public ResponseEntity<User> findUserByUsername(@RequestParam String username) {
-//		User user = posService.findUserByUsername(username);
-//		return new ResponseEntity<>(user, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("roles/byRoleName")
-//	public ResponseEntity<Role> getByRoleName(@RequestParam String name) {
-//		Role role = posService.findByRoleName(name);
-//		return new ResponseEntity<>(role, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("cities/byCountryName")
+	//	@GetMapping("cities/byCountryName")
 //	public ResponseEntity<List<City>> getCitiesByCountry(@RequestParam String name) {
 //		List<City> cities = posService.findCitiesByCountry(name);
 //		return new ResponseEntity<>(cities, HttpStatus.OK);
@@ -121,6 +86,18 @@ public abstract class PosController<T, ID> extends ExceptionHandling {
 //	public ResponseEntity<Country> saveCountry(@RequestBody Country country) {
 //		Country saved = posService.saveCountry(country);
 //		return new ResponseEntity<Country>(saved, HttpStatus.CREATED);
+//	}
+//
+//	@PutMapping("countries/{id}")
+//	public ResponseEntity<?> updateCountry(@RequestBody Country country) {
+//		Country updated = posService.updateCountry(country);
+//		return new ResponseEntity<>(updated, HttpStatus.OK);
+//	}
+//
+//	@DeleteMapping("{id}")
+//	public ResponseEntity<?> deleteCountryById(@PathVariable Integer id) {
+//		posService.deleteCountryById(id);
+//		return new ResponseEntity<>(HttpStatus.OK);
 //	}
 
 }

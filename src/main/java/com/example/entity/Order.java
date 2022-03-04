@@ -52,7 +52,7 @@ public class Order implements Serializable {
 	private Customer customer;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	private Employee employee;
+	private User user;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Status status;
@@ -132,12 +132,12 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public User getUser() {
+		return user;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getShippedDate() {
