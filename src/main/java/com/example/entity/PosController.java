@@ -35,7 +35,6 @@ public abstract class PosController<T, ID> extends ExceptionHandling {
 	@GetMapping
 	public ResponseEntity<List<T>> findItems() {
 		List<T> t = service.findAll();
-		log.info("users: {}", t);
 		return new ResponseEntity<>(t, HttpStatus.OK);
 	}
 
@@ -62,65 +61,5 @@ public abstract class PosController<T, ID> extends ExceptionHandling {
 		service.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-//	@GetMapping("countries/byName")
-//	public ResponseEntity<Country> findCountryByName(@RequestParam String name) throws DuplicateCountryException {
-//		Country country = service.findCountryByName(name);
-//		return new ResponseEntity<>(country, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("products/byProductName")
-//	public ResponseEntity<Product> findProductByName(@RequestParam String name) {
-//		Product product = service.findProductByName(name);
-//		return new ResponseEntity<>(product, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("users/byUsername")
-//	public ResponseEntity<User> findUserByUsername(@RequestParam String username) {
-//		User user = posService.findUserByUsername(username);
-//		return new ResponseEntity<>(user, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("roles/byRoleName")
-//	public ResponseEntity<Role> getByRoleName(@RequestParam String name) {
-//		Role role = posService.findByRoleName(name);
-//		return new ResponseEntity<>(role, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("cities/byCountryName")
-//	public ResponseEntity<List<City>> getCitiesByCountry(@RequestParam String name) {
-//		List<City> cities = posService.findCitiesByCountry(name);
-//		return new ResponseEntity<>(cities, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("users/byEmail")
-//	public ResponseEntity<User> findUserByEmail(@RequestParam String email) {
-//		User user = posService.findUserByEmail(email);
-//		return new ResponseEntity<>(user, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("customers/byPhone")
-//	public ResponseEntity<Customer> findByPhone(@RequestParam String phone) {
-//		Customer customer = posService.findCustomerByPhone(phone);
-//		return new ResponseEntity<>(customer, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("inventoryDetails/byInventory")
-//	public ResponseEntity<List<InventoryDetail>> getByInventoryDetails(@RequestParam Long inventoryId) {
-//		List<InventoryDetail> inventoryDetails = posService.findByInventory(inventoryId);
-//		return new ResponseEntity<>(inventoryDetails, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("orderDetails/byOrder")
-//	public ResponseEntity<List<OrderDetail>> findByOrder(@RequestParam Long orderNo) {
-//		List<OrderDetail> orderDetails = posService.getByOrder(orderNo);
-//		return new ResponseEntity<>(orderDetails, HttpStatus.OK);
-//	}
-//
-//	@PostMapping("countries")
-//	public ResponseEntity<Country> saveCountry(@RequestBody Country country) {
-//		Country saved = posService.saveCountry(country);
-//		return new ResponseEntity<Country>(saved, HttpStatus.CREATED);
-//	}
 
 }

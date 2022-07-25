@@ -74,4 +74,17 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		new ObjectMapper().writeValue(response.getOutputStream(), tokens);		
 	}
+
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+		log.error("unsuccessful authentication!!!!!!!!!!!!!");
+		Map<String, String> tokens = new HashMap<String, String>();
+		tokens.put("access_token", "auth failure");
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		new ObjectMapper().writeValue(response.getOutputStream(), tokens);		
+//		super.unsuccessfulAuthentication(request, response, failed);
+	}
+	
+	
 }

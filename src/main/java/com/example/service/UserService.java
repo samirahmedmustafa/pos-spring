@@ -40,13 +40,14 @@ public class UserService extends PosService<User, Long> implements UserDetailsSe
 		this.repository = repository;
 		this.roleRepo = roleRepo;
 	}
-
-	public User saveUser(User user) {
+	
+	@Override
+	public User save(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User saved = repository.save(user);
 		return saved;
 	}
-	
+
 	public User findUserByEmail(String email) {
 		User user = repository.findByEmail(email);
 

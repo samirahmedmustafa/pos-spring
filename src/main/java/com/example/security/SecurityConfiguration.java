@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.constant.ApplicationConstants;
 import com.example.filter.AuthenticationFilter;
 import com.example.filter.AuthorizationFilter;
 
@@ -44,25 +45,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("POST", "/api/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/roles/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.GET, "/api/users/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.POST, "/api/roles/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.POST, "/api/users/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.PUT, "/api/roles/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.PUT, "/api/users/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.DELETE, "/api/users/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
-				.antMatchers(HttpMethod.DELETE, "/api/roles/**")
-				.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/roles/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/roles/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.PUT, "/api/roles/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/roles/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/users/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/users/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.PUT, "/api/users/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/users/**")
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.GET, ApplicationConstants.ALL_URLS)
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.POST, ApplicationConstants.ALL_URLS)
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.PUT, ApplicationConstants.ALL_URLS)
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
+		.antMatchers(HttpMethod.DELETE, ApplicationConstants.ALL_URLS)
+		.hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_SUPER_ADMIN")
 				.anyRequest().denyAll();
 		http.addFilter(authenticationFilter);
-		http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(new AuthorizationFilter(), AuthenticationFilter.class);
+//		http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Bean

@@ -15,4 +15,13 @@ public class ApplicationConstants {
 	public static final String SECRET = "#@!#$GWERTG#$GRGBHRT#$%T";
 	public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
 	public static final String[] PUBLIC_URLS = {"/api/login", "/api/login/refreshToken", "/api/register", "/api/resetpassword/**", "/api/images/**"};
+	public static final String[] ALL_URLS = {
+												"/api/orders/**", "/api/orderDetails/**", "/api/orderAddresses/**", "/api/orderPayments/**",
+												"/api/products/**", "/api/categories/**", "/api/addresses/**", "/api/neighbourhoods/**",
+												"/api/expenses/**", "/api/expenseTypes/**", "/api/expensePayments/**",
+												"/api/countries/**", "/api/paymentTypes/**", "/api/shippers/**", "/api/suppliers/**",
+												"/api/inventories/**", "/api/inventoryDetails/**", "/api/inventoryPayments/**", "/api/cities/**",
+												"/api/customers/**",
+											};
+	
 }

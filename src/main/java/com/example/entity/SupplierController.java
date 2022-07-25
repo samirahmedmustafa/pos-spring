@@ -18,37 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateCountryException;
 import com.example.exception.ExceptionHandling;
-import com.example.exception.InvalidUserOrRoleException;
 import com.example.service.PosService;
+import com.example.service.RoleService;
+import com.example.service.SupplierService;
 import com.example.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
-@RequestMapping(path = { "/", "/api/users" })
-public class UserController extends PosController<User, Long> {
+@RequestMapping(path = { "/", "/api/suppliers" })
+public class SupplierController extends PosController<Supplier, Integer> {
 
-	private final UserService service;
+	private final SupplierService service;
 
-	public UserController(UserService service) {
+	public SupplierController(SupplierService service) {
 		super(service);
 		this.service = service;
 	}
 
-	@PostMapping("addUserRole")
-	public ResponseEntity<?> addUserRole(@RequestParam String username, @RequestParam String roleName) throws InvalidUserOrRoleException {
-		log.info("username: {}", username);
-		log.info("roleName: {}", roleName);
-		service.addUserRole(username, roleName);
-		return new ResponseEntity<>(HttpStatus.OK);		
-	}
-
-	@GetMapping("byUsername")
-	public ResponseEntity<User> findUserByUsername(@RequestParam String username) {
-		User user = service.findUserByUsername(username);
-		return new ResponseEntity<>(user, HttpStatus.OK);
-	}
 }

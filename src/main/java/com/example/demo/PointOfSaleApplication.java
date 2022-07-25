@@ -31,38 +31,38 @@ public class PointOfSaleApplication {
 	@Bean
 	CommandLineRunner run(UserService userService, RoleService roleService) {
 		return args -> {
-			Role roleUser = new Role(null, "ROLE_USER");
-			Role roleADMIN = new Role(null, "ROLE_ADMIN");
-			Role roleManager = new Role(null, "ROLE_MANAGER");
-			Role roleSuperAdmin = new Role(null, "ROLE_SUPER_ADMIN");
-			
-			roleService.save(roleUser);
-			roleService.save(roleADMIN);
-			roleService.save(roleManager);
-			roleService.save(roleSuperAdmin);
-			
-			User userSamir = new User(null, RandomStringUtils.randomAlphanumeric(10), "sahmed", "Samir",
-					"Ahmed", "123", "samir.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
-					null, null, null, null, null);
-			User userYassin = new User(null, RandomStringUtils.randomAlphanumeric(10), "yahmed", "Yassin",
-					"Ahmed", "123", "yassin.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
-					null, null, null, null, null);
-			User userRawan = new User(null, RandomStringUtils.randomAlphanumeric(10), "rahmed", "Rawan",
-					"Ahmed", "123", "rawan.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
-					null, null, null, null, null);
-			User userMaryam = new User(null, RandomStringUtils.randomAlphanumeric(10), "mahmed", "Maryam",
-					"Ahmed", "123", "maryam.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
-					null, null, null, null, null);
-			
-			userService.saveUser(userSamir);
-			userService.saveUser(userYassin);
-			userService.saveUser(userRawan);
-			userService.saveUser(userMaryam);
-			
-			userService.addUserRole("sahmed", "ROLE_SUPER_ADMIN");
-			userService.addUserRole("yahmed", "ROLE_MANAGER");
-			userService.addUserRole("rahmed", "ROLE_ADMIN");
-			userService.addUserRole("mahmed", "ROLE_USER");
+//			Role roleUser = new Role(null, "ROLE_USER");
+//			Role roleADMIN = new Role(null, "ROLE_ADMIN");
+//			Role roleManager = new Role(null, "ROLE_MANAGER");
+//			Role roleSuperAdmin = new Role(null, "ROLE_SUPER_ADMIN");
+//			
+//			roleService.save(roleUser);
+//			roleService.save(roleADMIN);
+//			roleService.save(roleManager);
+//			roleService.save(roleSuperAdmin);
+//			
+//			User userSamir = new User(null, RandomStringUtils.randomAlphanumeric(10), "sahmed", "Samir",
+//					"Ahmed", "123", "samir.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
+//					null, null, null, null, null);
+//			User userYassin = new User(null, RandomStringUtils.randomAlphanumeric(10), "yahmed", "Yassin",
+//					"Ahmed", "123", "yassin.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
+//					null, null, null, null, null);
+//			User userRawan = new User(null, RandomStringUtils.randomAlphanumeric(10), "rahmed", "Rawan",
+//					"Ahmed", "123", "rawan.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
+//					null, null, null, null, null);
+//			User userMaryam = new User(null, RandomStringUtils.randomAlphanumeric(10), "mahmed", "Maryam",
+//					"Ahmed", "123", "maryam.ahmedmustafa@gmail.com", null, null, new Date(), true, true, null,
+//					null, null, null, null, null);
+//			
+//			userService.save(userSamir);
+//			userService.save(userYassin);
+//			userService.save(userRawan);
+//			userService.save(userMaryam);
+//			
+//			userService.addUserRole("sahmed", "ROLE_SUPER_ADMIN");
+//			userService.addUserRole("yahmed", "ROLE_MANAGER");
+//			userService.addUserRole("rahmed", "ROLE_ADMIN");
+//			userService.addUserRole("mahmed", "ROLE_USER");
 		};
 	}
 

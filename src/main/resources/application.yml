@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://rawoona.com:5433/pos
+    url: jdbc:postgresql://116.203.67.195:5433/pos
     username: pos
     password: P@s+9res
   # JPA properties
