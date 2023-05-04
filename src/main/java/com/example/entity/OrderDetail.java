@@ -12,8 +12,15 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "order_details")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +33,6 @@ public class OrderDetail implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Product product;
-	@JsonBackReference("order-orderdetail")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Order order;
@@ -38,46 +44,6 @@ public class OrderDetail implements Serializable {
 		if(product != null)
 			subTotal = product.getSellPrice().multiply(BigDecimal.valueOf(quantity));
 		return subTotal;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-	
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public void setSubTotal(BigDecimal subTotal) {
-		this.subTotal = subTotal;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public OrderDetail() {
-		super();
 	}
 
 }

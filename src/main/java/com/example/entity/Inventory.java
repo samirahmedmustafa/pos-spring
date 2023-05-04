@@ -21,8 +21,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "inventories")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Inventory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,41 +37,17 @@ public class Inventory implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Transient
-	private Long totalAmount;
 	@Temporal(TemporalType.DATE)
 	private Date inventoryDate;
-	@JsonManagedReference("inventory-inventorydetails")
+	@Transient
+	private Long totalAmount;
+//	@JsonManagedReference("inventory-inventorydetails")
 	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
 	private List<InventoryDetail> inventoryDetails;
 	@JsonIgnore
 	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
 	private List<InventoryPayment> inventoryPayments;
 	
-	public List<InventoryPayment> getInventoryPayments() {
-		return inventoryPayments;
-	}
-
-	public void setInventoryPayments(List<InventoryPayment> inventoryPayments) {
-		this.inventoryPayments = inventoryPayments;
-	}
-
-	public List<InventoryDetail> getInventoryDetails() {
-		return inventoryDetails;
-	}
-
-	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
-		this.inventoryDetails = inventoryDetails;
-	}
-
-	public Date getInventoryDate() {
-		return inventoryDate;
-	}
-
-	public void setInventoryDate(Date inventoryDate) {
-		this.inventoryDate = inventoryDate;
-	}
-
 	public Long getTotalAmount() {
 		
 		totalAmount = 0L;
@@ -77,40 +60,6 @@ public class Inventory implements Serializable {
 		}
 		
 		return totalAmount;
-	}
-
-	public void setTotalAmount(Long totalAmount) {
-		this.totalAmount = totalAmount;
-	}
-
-	public List<InventoryDetail> getInventoryTransactions() {
-		return inventoryDetails;
-	}
-
-	public void setInventoryTransactions(List<InventoryDetail> inventoryDetails) {
-		this.inventoryDetails = inventoryDetails;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Inventory() {
-		super();
-	}
-
-	public Inventory(Long id, Long totalAmount, Date inventoryDate, List<InventoryDetail> inventoryDetails,
-			List<InventoryPayment> inventoryPayments) {
-		super();
-		this.id = id;
-		this.totalAmount = totalAmount;
-		this.inventoryDate = inventoryDate;
-		this.inventoryDetails = inventoryDetails;
-		this.inventoryPayments = inventoryPayments;
 	}
 
 }

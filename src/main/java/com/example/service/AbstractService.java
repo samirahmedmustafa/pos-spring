@@ -129,10 +129,10 @@ public class AbstractService<T, ID> {
 		return false;
 	}
 
-	public Product debitProduct(Long id, Integer quantity) {
+	public Product debitProduct(Long id, Integer currentStock) {
 		Product product = ((ProductRepo) repository).getById(id);
 		
-		product.setQuantity(product.getQuantity() + quantity);
+		product.setCurrentStock(product.getCurrentStock() + currentStock);
 		product = ((ProductRepo) repository).save(product);
 		return product;
 	}

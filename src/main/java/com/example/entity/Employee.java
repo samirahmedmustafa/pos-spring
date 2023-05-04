@@ -26,15 +26,22 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "employees")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	@Column(unique = true)
 	private String accountId;
 	private String lastName;
@@ -50,6 +57,9 @@ public class Employee implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date hireDate;
 	private String address;
+	private String homePhone;
+	private String photo;
+	private String notes;
 	@ManyToOne
 	private Role role;
 	@ManyToOne
@@ -58,181 +68,13 @@ public class Employee implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Country country;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Neighbourhood neighbourhood;
-	private String homePhone;
-	private String photo;
+//	@ManyToOne
+//	@JoinColumn(referencedColumnName = "id")
+//	private Neighbourhood neighbourhood;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Employee reportsTo;
-	private String notes;
 	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<Order> orders;
-
-	public Employee() {
-		super();
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public String getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Boolean getInActive() {
-		return inActive;
-	}
-
-	public void setInActive(Boolean inActive) {
-		this.inActive = inActive;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public Date getHireDate() {
-		return hireDate;
-	}
-
-	public void setHireDate(Date hireDate) {
-		this.hireDate = hireDate;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
-	public Neighbourhood getNeighbourhood() {
-		return neighbourhood;
-	}
-
-	public void setNeighbourhood(Neighbourhood neighbourhood) {
-		this.neighbourhood = neighbourhood;
-	}
-
-	public String getHomePhone() {
-		return homePhone;
-	}
-
-	public void setHomePhone(String homePhone) {
-		this.homePhone = homePhone;
-	}
-
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-
-	public Employee getReportsTo() {
-		return reportsTo;
-	}
-
-	public void setReportsTo(Employee reportsTo) {
-		this.reportsTo = reportsTo;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
 }

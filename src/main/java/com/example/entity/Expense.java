@@ -22,8 +22,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "expenses")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Expense implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,65 +52,4 @@ public class Expense implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "expense", cascade = CascadeType.ALL)
 	private List<ExpensePayment> expensePayments;
-
-	public List<ExpensePayment> getExpensePayments() {
-		return expensePayments;
-	}
-
-	public void setExpensePayments(List<ExpensePayment> expensePayments) {
-		this.expensePayments = expensePayments;
-	}
-
-	public ExpenseType getExpenseType() {
-		return expenseType;
-	}
-
-	public void setExpenseType(ExpenseType expenseType) {
-		this.expenseType = expenseType;
-	}
-
-	public Date getExpenseDate() {
-		return expenseDate;
-	}
-
-	public void setExpenseDate(Date expenseDate) {
-		this.expenseDate = expenseDate;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Expense() {
-		super();
-	}
-
 }

@@ -5,19 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.example.entity.Address;
+import com.example.entity.Category;
+import com.example.entity.CurrencyUnit;
 import com.example.entity.Customer;
-import com.example.entity.Order;
-import com.example.entity.OrderAddress;
-import com.example.entity.OrderDetail;
 import com.example.exception.ItemNotFoundException;
+import com.example.repository.CategoryRepo;
+import com.example.repository.CurrencyUnitRepo;
 import com.example.repository.CustomerRepo;
-import com.example.repository.OrderAddressRepo;
 
 @Service
 @Transactional
-public class OrderAddressService extends AbstractService<OrderAddress, Long> {
+public class CurrencyUnitService extends AbstractService<CurrencyUnit, Long> {
 
-	public OrderAddressService(OrderAddressRepo repository) {
+	public CurrencyUnitService(CurrencyUnitRepo repository) {
 		super(repository);
 	}
 }

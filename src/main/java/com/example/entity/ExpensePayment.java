@@ -18,8 +18,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "expense_payments")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExpensePayment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,50 +42,8 @@ public class ExpensePayment implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Expense expense;
-
-	public Expense getExpense() {
-		return expense;
-	}
-
-	public void setExpense(Expense expense) {
-		this.expense = expense;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Date getPaymentDate() {
-		return paymentDate;
-	}
-
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
-
-	public ExpensePayment() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private CurrencyUnit currencyUnit;
 
 }

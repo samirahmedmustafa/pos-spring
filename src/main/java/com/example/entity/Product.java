@@ -17,8 +17,15 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +47,7 @@ public class Product implements Serializable {
 	private BigDecimal vatValue;
 	private BigDecimal sellPrice;
 	private BigDecimal depreciation;
-	private Integer quantity;
+	private Integer currentStock;
 	private BigDecimal discount;
 	private BigDecimal averageCost;
 	@ManyToOne
@@ -56,31 +63,7 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 
-	public BigDecimal getDepreciation() {
-		return depreciation;
-	}
-
-	public void setDepreciation(BigDecimal depreciation) {
-		this.depreciation = depreciation;
-	}
-
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-	
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
-	public void setVatValue(BigDecimal vatValue) {
-		this.vatValue = vatValue;
-	}
-
-	public void setAverageCost(BigDecimal averageCost) {
-		this.averageCost = averageCost;
-	}
-
-	public Integer getQuantity() {
+	public Integer getCurrentStock() {
 //		quantity = 0;
 //		System.out.println("inventories: " + inventoryDetails);
 //		System.out.println("orders: " + orderDetails);
@@ -90,27 +73,7 @@ public class Product implements Serializable {
 //		this.orderDetails.stream().forEach((orders)->{
 //			quantity -= orders.getQuantity();
 //		});
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public BigDecimal getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(BigDecimal discount) {
-		this.discount = discount;
-	}
-
-	public BigDecimal getVatPercentage() {
-		return vatPercentage;
-	}
-
-	public void setVatPercentage(BigDecimal vatPercentage) {
-		this.vatPercentage = vatPercentage;
+		return currentStock;
 	}
 
 	public BigDecimal getVatValue() {
@@ -118,93 +81,4 @@ public class Product implements Serializable {
 			return sellPrice.multiply(vatPercentage).divide(BigDecimal.valueOf(100));
 		return vatValue;
 	}
-
-	public BigDecimal getAverageCost() {
-		return averageCost;
-	}
-
-	public String getBarcode() {
-		return barcode;
-	}
-
-	public void setBarcode(String barcode) {
-		this.barcode = barcode;
-	}
-
-	public BigDecimal getSellPrice() {
-		return sellPrice;
-	}
-
-	public void setSellPrice(BigDecimal sellPrice) {
-		this.sellPrice = sellPrice;
-	}
-
-	public List<InventoryDetail> getInventoryDetails() {
-		return inventoryDetails;
-	}
-
-	public void setInventoryDetails(List<InventoryDetail> inventoryDetails) {
-		this.inventoryDetails = inventoryDetails;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public String getQuantityPerUnit() {
-		return quantityPerUnit;
-	}
-
-	public void setQuantityPerUnit(String quantityPerUnit) {
-		this.quantityPerUnit = quantityPerUnit;
-	}
-
-	public String getNameAr() {
-		return nameAr;
-	}
-
-	public void setNameAr(String nameAr) {
-		this.nameAr = nameAr;
-	}
-
-	public Supplier getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getImg() {
-		return img;
-	}
-
-	public void setImg(String img) {
-		this.img = img;
-	}
-
-	public Product() {
-		super();
-	}
-
 }

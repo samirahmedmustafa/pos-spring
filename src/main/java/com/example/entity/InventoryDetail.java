@@ -19,22 +19,22 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "inventory_details")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class InventoryDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Product product;
-	@JsonBackReference("inventory-inventorydetails")
-	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
-	private Inventory inventory;
+	private Long id;
 	private Integer quantity;
 	private Long unitPrice;
 	@Temporal(TemporalType.DATE)
@@ -43,86 +43,17 @@ public class InventoryDetail implements Serializable {
 	private Date manufacturingDate;
 	@Transient
 	private Long subTotal;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Product product;
+//	@JsonBackReference("inventory-inventorydetails")
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "id")
+	private Inventory inventory;
 	
-	public Date getManufacturingDate() {
-		return manufacturingDate;
-	}
-
-	public void setManufacturingDate(Date manufacturingDate) {
-		this.manufacturingDate = manufacturingDate;
-	}
-
-	public Date getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(Date expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
-	public Inventory getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-
 	public Long getSubTotal() {
 		subTotal = quantity * unitPrice;
 		return subTotal;
-	}
-
-	public void setSubTotal(Long subTotal) {
-		this.subTotal = subTotal;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public Long getUnitPrice() {
-		return unitPrice;
-	}
-
-	public void setUnitPrice(Long unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public InventoryDetail() {
-		super();
-	}
-
-	public InventoryDetail(Integer id, Product product, Inventory inventory, Integer quantity, Long unitPrice,
-			Date expiryDate, Date manufacturingDate) {
-		super();
-		this.id = id;
-		this.product = product;
-		this.inventory = inventory;
-		this.quantity = quantity;
-		this.unitPrice = unitPrice;
-		this.expiryDate = expiryDate;
-		this.manufacturingDate = manufacturingDate;
 	}
 
 }
