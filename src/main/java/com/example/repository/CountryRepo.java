@@ -8,9 +8,9 @@ import com.google.common.base.Optional;
 
 public interface CountryRepo extends JpaRepository<Country, Integer> {
 
-	@Query("select c from Country c where c.code = ?1")
-	Optional<Country> getCountryByCode(String code);
+//	@Query("select c from Country c where c.code = ?1")
+	Country findByCode(String code);
 	
-	@Query("select c from Country c where c.name= ?1")
-	Optional<Country> getCountryByName(String name);
+//	@Query("select c from Country c where c.name= ?1")
+	Country findByName(String name);
 }

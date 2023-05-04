@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.example.entity.AbstractController;
 import com.example.entity.City;
 import com.example.entity.Country;
 import com.example.entity.Customer;
@@ -64,20 +62,20 @@ public class AbstractService<T, ID> {
 	}
 
 	public Employee getByAccountId(String accountId) {
-		return ((EmployeeRepo) repository).getByAccountId(accountId).orElseThrow(() -> DatabaseConstraintException
-				.builder().message(String.format("Account id %s not found", accountId)).build());
+		return ((EmployeeRepo) repository).findByAccountId(accountId);//.orElseThrow(() -> DatabaseConstraintException
+//				.builder().message(String.format("Account id %s not found", accountId)).build());
 	}
 
 	public Role getByRoleName(String name) {
-		return ((RoleRepo) repository).getByName(name).orElseThrow(() -> DatabaseConstraintException.builder()
-				.message(String.format("Invalid role name %s", name)).build());
+		return ((RoleRepo) repository).findByName(name);//.orElseThrow(() -> DatabaseConstraintException.builder()
+//				.message(String.format("Invalid role name %s", name)).build());
 	}
 
 	public Employee login(Employee employee) {
 
-		Employee existingEmployee = ((EmployeeRepo) repository).getByAccountId(employee.getAccountId())
-				.orElseThrow(() -> DatabaseConstraintException.builder()
-						.message(String.format("Invalid accountId or password")).build());
+		Employee existingEmployee = ((EmployeeRepo) repository).findByAccountId(employee.getAccountId());
+//				.orElseThrow(() -> DatabaseConstraintException.builder()
+//						.message(String.format("Invalid accountId or password")).build());
 
 		if (!BCrypt.checkpw(employee.getPassword(), existingEmployee.getPassword()))
 			throw DatabaseConstraintException.builder().message(String.format("Invalid accountId or password")).build();
@@ -86,48 +84,52 @@ public class AbstractService<T, ID> {
 	}
 
 	public Employee getByEmail(String email) {
-		return ((EmployeeRepo) repository).getByEmail(email).orElseThrow(() -> DatabaseConstraintException.builder()
-				.message(String.format("Email %s not found", email)).build());
+		return ((EmployeeRepo) repository).findByEmail(email);
+//				.orElseThrow(() -> DatabaseConstraintException.builder()
+//				.message(String.format("Email %s not found", email)).build());
 	}
 
 	public Product getProductByName(String name) {
-		return ((ProductRepo) repository).getByName(name).orElseThrow(() -> DatabaseConstraintException.builder()
-				.message(String.format("Invalid Product name %s", name)).build());
+		return ((ProductRepo) repository).findByName(name);
+//				.orElseThrow(() -> DatabaseConstraintException.builder()
+//				.message(String.format("Invalid Product name %s", name)).build());
 	}
 
 	public Customer getByPhone(String phone) {
-		return ((CustomerRepo) repository).getByPhone(phone).orElseThrow(() -> DatabaseConstraintException.builder()
-				.message(String.format("No record with the phone %s", phone)).build());
+		return ((CustomerRepo) repository).findByPhone(phone);
+//		.orElseThrow(() -> DatabaseConstraintException.builder()
+//				.message(String.format("No record with the phone %s", phone)).build());
 	}
 
 	public List<OrderDetail> getByOrder(Long orderNo) {
 
-		List<OrderDetail> orderDetails = ((OrderDetailRepo) repository).getByOrder(orderNo).get();
+		List<OrderDetail> orderDetails = ((OrderDetailRepo) repository).findByOrder(orderNo).get();
 		return orderDetails;
 	}
 
 	public List<InventoryDetail> getByInventory(Long inventory) {
-		List<InventoryDetail> inventoryDetails = ((InventoryDetailRepo) repository).getByInventory(inventory)
-				.orElseThrow(() -> DatabaseConstraintException.builder()
-						.message(String.format("No inventory details with the inventory id %s", inventory)).build());
+		List<InventoryDetail> inventoryDetails = ((InventoryDetailRepo) repository).findByInventory(inventory);
+//				.orElseThrow(() -> DatabaseConstraintException.builder()
+//						.message(String.format("No inventory details with the inventory id %s", inventory)).build());
 		return inventoryDetails;
 	}
 
 	public Product getByBarcode(String barcode) {
-		Product product = ((ProductRepo) repository).getByBarcode(barcode).orElseThrow(() -> DatabaseConstraintException
-				.builder().message(String.format("Couldn't find item with the barcode %s", barcode)).build());
+		Product product = ((ProductRepo) repository).findByBarcode(barcode);
+//		.orElseThrow(() -> DatabaseConstraintException
+//				.builder().message(String.format("Couldn't find item with the barcode %s", barcode)).build());
 		return product;
 	}
 
-	public Boolean isCountryNameExists(String name) {
-		Boolean isExist = ((CountryRepo) repository).getCountryByName(name).isPresent();
-
-		if (isExist)
-			throw DatabaseConstraintException.builder().message(String.format("Country is already exists %s", name))
-					.build();
-
-		return false;
-	}
+//	public Boolean isCountryNameExists(String name) {
+//		Boolean isExist = ((CountryRepo) repository).findByName(name);
+//
+//		if (isExist)
+//			throw DatabaseConstraintException.builder().message(String.format("Country is already exists %s", name))
+//					.build();
+//
+//		return false;
+//	}
 
 	public Product debitProduct(Long id, Integer currentStock) {
 		Product product = ((ProductRepo) repository).getById(id);
@@ -138,21 +140,21 @@ public class AbstractService<T, ID> {
 	}
 
 	public List<City> getCitiesByCountry(String country) {
-		List<City> cities = ((CityRepo) repository).findCitiesByCountry(country)
-				.orElseThrow(() -> DatabaseConstraintException.builder()
-						.message(String.format("Couldn't find cities in the country %s", country)).build());
+		List<City> cities = ((CityRepo) repository).findByCountry(country);
+//				.orElseThrow(() -> DatabaseConstraintException.builder()
+//						.message(String.format("Couldn't find cities in the country %s", country)).build());
 		return cities;
 	}
 
 	public Country getCountryByCode(String code) {
-		Country country = ((CountryRepo) repository).getCountryByCode(code).get();
+		Country country = ((CountryRepo) repository).findByCode(code);
 		return country;
 	}
 
 	private Boolean isCountryCodeExist(String code) {
-		Boolean isCodeExist = ((CountryRepo) repository).getCountryByCode(code).isPresent();
+		Country country = ((CountryRepo) repository).findByCode(code);
 
-		if (isCodeExist)
+		if (country != null)
 			throw DatabaseConstraintException.builder()
 					.message(String.format("Country code %s already exists in the database", (code))).build();
 
@@ -160,8 +162,9 @@ public class AbstractService<T, ID> {
 	}
 
 	private Boolean isCountryNameExist(String name) {
-		Boolean isNameExist = ((CountryRepo) repository).getCountryByName(name).isPresent();
-		if (isNameExist)
+		Country country = ((CountryRepo) repository).findByName(name);
+		
+		if (country == null)
 			throw DatabaseConstraintException.builder()
 					.message(String.format("Country name %s already exists in the database", (name))).build();
 
@@ -170,9 +173,9 @@ public class AbstractService<T, ID> {
 
 	private Boolean isEmployeeAccountIdExist(String accountId) {
 
-		Boolean accountIdIsExist = ((EmployeeRepo) repository).getByAccountId(accountId).isPresent();
+		Employee employee = ((EmployeeRepo) repository).findByAccountId(accountId);
 
-		if (accountIdIsExist)
+		if (employee != null)
 			throw DatabaseConstraintException.builder()
 					.message(String.format("Employee account Id %s already exists in the database", (accountId)))
 					.build();
@@ -182,9 +185,9 @@ public class AbstractService<T, ID> {
 
 	private Boolean isEmailUsed(String email) {
 
-		Boolean emailIsUsed = ((EmployeeRepo) repository).getByEmail(email).isPresent();
+		Employee employee = ((EmployeeRepo) repository).findByEmail(email);
 
-		if (emailIsUsed)
+		if (employee != null)
 			throw DatabaseConstraintException.builder()
 					.message(String.format("Employee email %s already exists in the database", email)).build();
 
@@ -208,12 +211,12 @@ public class AbstractService<T, ID> {
 	}
 
 	public void validateCustomerPhone(T t) {
-		Boolean isExist = ((CustomerRepo) repository).getByPhone(((Customer) t).getPhone()).isPresent();
+		Customer customer = ((CustomerRepo) repository).findByPhone(((Customer) t).getPhone());
 
-		if (isExist)
-			throw DatabaseConstraintException.builder()
-					.message(String.format("Phone no. %s already exists in the database", ((Customer) t).getPhone()))
-					.build();
+//		if (isExist)
+//			throw DatabaseConstraintException.builder()
+//					.message(String.format("Phone no. %s already exists in the database", ((Customer) t).getPhone()))
+//					.build();
 	}
 
 	public void isPasswordNotEmpty(String password) {

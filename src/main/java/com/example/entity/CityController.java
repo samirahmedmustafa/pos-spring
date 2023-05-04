@@ -2,7 +2,8 @@ package com.example.entity;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,15 +15,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.service.AbstractService;
+import com.example.exception.DatabaseConstraintException;
+import com.example.exception.DuplicateCountryException;
+import com.example.exception.ExceptionHandling;
+import com.example.exception.InvalidUserOrRoleException;
+import com.example.service.AddressService;
 import com.example.service.CityService;
+import com.example.service.PosService;
+import com.example.service.UserService;
+
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("cities")
-public class CityController extends AbstractController<City, Integer> {
+@RequestMapping(path = { "/", "/api/cities" })
+public class CityController extends PosController<City, Long> {
+
+	private final CityService service;
 
 	public CityController(CityService service) {
 		super(service);
+		this.service = service;
 	}
 }

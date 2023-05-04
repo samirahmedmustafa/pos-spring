@@ -45,11 +45,10 @@ public class Expense implements Serializable {
 	private Date expenseDate;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	private Employee employee;
+	private User user;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private ExpenseType expenseType;
 	@JsonIgnore
 	@OneToMany(mappedBy = "expense", cascade = CascadeType.ALL)
-	private List<ExpensePayment> expensePayments;
-}
+	private List<ExpensePayment> expensePayments;}

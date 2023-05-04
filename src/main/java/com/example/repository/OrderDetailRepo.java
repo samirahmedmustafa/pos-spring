@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.entity.OrderDetail;
 
 public interface OrderDetailRepo extends JpaRepository<OrderDetail, Long> {
-	@Query("select od from OrderDetail od where od.order.id = ?1")
-	Optional<List<OrderDetail>> getByOrder(Long order);
+//	@Query("select od from OrderDetail od where od.order.id = ?1")
+	Optional<List<OrderDetail>> findByOrder(Long order);
 }
