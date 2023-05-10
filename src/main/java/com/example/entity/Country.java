@@ -45,5 +45,5 @@ public class Country implements Serializable {
 	private List<Supplier> suppliers;
 	@JsonIgnore
 	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-	private List<User> users;
+	private List<Employee> employees;
 }

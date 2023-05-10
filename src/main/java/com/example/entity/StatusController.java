@@ -22,15 +22,13 @@ import com.example.service.PosService;
 import com.example.service.RoleService;
 import com.example.service.StatusService;
 import com.example.service.SupplierService;
-import com.example.service.UserService;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(path = { "/", "/api/statuses" })
-public class StatusController extends PosController<Status, Integer> {
+public class StatusController extends PosController<Status, Long> {
 
 	private final StatusService service;
 

@@ -19,7 +19,6 @@ import com.example.entity.Inventory;
 import com.example.entity.Product;
 import com.example.entity.Role;
 import com.example.entity.Supplier;
-import com.example.entity.User;
 import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateEmailException;
 import com.example.exception.ExceptionHandling;
@@ -30,9 +29,6 @@ import com.example.repository.ProductRepo;
 import com.example.repository.RoleRepo;
 import com.example.repository.StatusRepo;
 import com.example.repository.SupplierRepo;
-import com.example.repository.UserRepo;
-
-import ch.qos.logback.core.status.Status;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

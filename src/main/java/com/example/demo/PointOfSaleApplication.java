@@ -5,18 +5,21 @@ import java.util.Date;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.entity.Employee;
 import com.example.entity.Role;
-import com.example.entity.User;
+import com.example.security.SecurityConfiguration;
+import com.example.service.EmployeeService;
 import com.example.service.PosService;
 import com.example.service.RoleService;
-import com.example.service.UserService;
 
 @SpringBootApplication
 @ComponentScan({ "com.example" })
@@ -29,7 +32,7 @@ public class PointOfSaleApplication {
 	}
 	
 	@Bean
-	CommandLineRunner run(UserService userService, RoleService roleService) {
+	CommandLineRunner run(EmployeeService employeeService, RoleService roleService) {
 		return args -> {
 //			Role roleUser = new Role(null, "ROLE_USER");
 //			Role roleADMIN = new Role(null, "ROLE_ADMIN");

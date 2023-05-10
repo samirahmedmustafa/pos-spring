@@ -21,7 +21,6 @@ import com.example.exception.ExceptionHandling;
 import com.example.service.PosService;
 import com.example.service.ProductService;
 import com.example.service.RoleService;
-import com.example.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -39,9 +39,6 @@ public class Address implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private City city;
-//	@ManyToOne
-//	@JoinColumn(referencedColumnName = "id")
-//	private Neighbourhood neighbourhood;
 	@JsonBackReference("customer-address")
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")

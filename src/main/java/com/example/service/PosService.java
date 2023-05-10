@@ -20,7 +20,6 @@ import com.example.entity.InventoryDetail;
 import com.example.entity.OrderDetail;
 import com.example.entity.Product;
 import com.example.entity.Role;
-import com.example.entity.User;
 import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateCountryException;
 import com.example.exception.DuplicateEmailException;
@@ -39,7 +38,6 @@ import com.example.repository.ExpenseTypeRepo;
 import com.example.repository.InventoryDetailRepo;
 import com.example.repository.InventoryPaymentRepo;
 import com.example.repository.InventoryRepo;
-import com.example.repository.NeighbourhoodRepo;
 import com.example.repository.OrderDetailRepo;
 import com.example.repository.OrderPaymentRepo;
 import com.example.repository.OrderRepo;
@@ -48,13 +46,10 @@ import com.example.repository.RoleRepo;
 import com.example.repository.ShipperRepo;
 import com.example.repository.StatusRepo;
 import com.example.repository.SupplierRepo;
-import com.example.repository.UserRepo;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-//@RequiredArgsConstructor
 public abstract class PosService<T, ID> {
 
 	protected final JpaRepository<T, ID> repository;

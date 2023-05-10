@@ -45,7 +45,7 @@ public class Expense implements Serializable {
 	private Date expenseDate;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	private User user;
+	private Employee employee;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private ExpenseType expenseType;

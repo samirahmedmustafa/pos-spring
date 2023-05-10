@@ -19,36 +19,24 @@ import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateCountryException;
 import com.example.exception.ExceptionHandling;
 import com.example.exception.InvalidUserOrRoleException;
+import com.example.service.AddressService;
+import com.example.service.CityService;
+import com.example.service.CustomerService;
+import com.example.service.EmployeeService;
+import com.example.service.ExpenseService;
 import com.example.service.PosService;
-import com.example.service.UserService;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
-@RequestMapping(path = { "/", "/api/users" })
-public class UserController extends PosController<User, Long> {
+@RequestMapping(path = { "/", "/api/employees" })
+public class EmployeeController extends PosController<Employee, Long> {
 
-	private final UserService service;
+	private final EmployeeService service;
 
-	public UserController(UserService service) {
+	public EmployeeController(EmployeeService service) {
 		super(service);
 		this.service = service;
-	}
-
-	@PostMapping("addUserRole")
-	public ResponseEntity<?> addUserRole(@RequestParam String username, @RequestParam String roleName) throws InvalidUserOrRoleException {
-		log.info("username: {}", username);
-		log.info("roleName: {}", roleName);
-		service.addUserRole(username, roleName);
-		return new ResponseEntity<>(HttpStatus.OK);		
-	}
-
-	@GetMapping("byUsername")
-	public ResponseEntity<User> findUserByUsername(@RequestParam String username) {
-		User user = service.findUserByUsername(username);
-		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 }

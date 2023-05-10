@@ -17,7 +17,6 @@ import com.example.entity.Category;
 import com.example.entity.Country;
 import com.example.entity.Product;
 import com.example.entity.Role;
-import com.example.entity.User;
 import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateCountryException;
 import com.example.exception.DuplicateEmailException;
@@ -28,8 +27,6 @@ import com.example.repository.CountryRepo;
 import com.example.repository.CustomerRepo;
 import com.example.repository.ProductRepo;
 import com.example.repository.RoleRepo;
-import com.example.repository.UserRepo;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

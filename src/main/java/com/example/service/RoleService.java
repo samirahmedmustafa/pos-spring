@@ -13,14 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.entity.Role;
-import com.example.entity.User;
 import com.example.exception.DatabaseConstraintException;
 import com.example.exception.DuplicateEmailException;
 import com.example.exception.ExceptionHandling;
 import com.example.exception.InvalidUserOrRoleException;
 import com.example.repository.RoleRepo;
-import com.example.repository.UserRepo;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -52,5 +52,5 @@ public class City implements Serializable {
 	private List<Supplier> suppliers;
 	@JsonIgnore
 	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
-	private List<User> users;
+	private List<Employee> employees;
 }

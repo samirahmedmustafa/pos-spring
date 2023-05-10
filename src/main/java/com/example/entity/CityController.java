@@ -22,8 +22,6 @@ import com.example.exception.InvalidUserOrRoleException;
 import com.example.service.AddressService;
 import com.example.service.CityService;
 import com.example.service.PosService;
-import com.example.service.UserService;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -24,13 +24,10 @@ import com.example.service.CityService;
 import com.example.service.CustomerService;
 import com.example.service.ExpenseService;
 import com.example.service.InventoryDetailService;
-import com.example.service.NeighbourhoodService;
 import com.example.service.OrderDetailService;
 import com.example.service.OrderPaymentService;
 import com.example.service.OrderService;
 import com.example.service.PosService;
-import com.example.service.UserService;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

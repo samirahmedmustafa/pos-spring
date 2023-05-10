@@ -55,7 +55,7 @@ public class Order implements Serializable {
 	private Customer customer;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
-	private User user;
+	private Employee employee;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Status status;
