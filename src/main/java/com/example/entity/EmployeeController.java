@@ -1,7 +1,6 @@
 package com.example.entity;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,6 +24,7 @@ import com.example.service.CustomerService;
 import com.example.service.EmployeeService;
 import com.example.service.ExpenseService;
 import com.example.service.PosService;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,5 +38,10 @@ public class EmployeeController extends PosController<Employee, Long> {
 	public EmployeeController(EmployeeService service) {
 		super(service);
 		this.service = service;
+	}
+	
+	@PostConstruct
+	public void initRolesAndEmployees() {
+		service.initRoleAndEmployee();
 	}
 }

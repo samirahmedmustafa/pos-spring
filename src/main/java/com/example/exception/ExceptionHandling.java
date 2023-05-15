@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.NoSuchElementException;
-
-import javax.persistence.NoResultException;
-
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -24,6 +21,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.example.constant.ApplicationConstants;
 
+import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice

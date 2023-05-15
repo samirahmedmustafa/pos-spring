@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -62,8 +60,7 @@ public class AbstractService<T, ID> {
 	}
 
 	public Employee getByAccountId(String accountId) {
-		return ((EmployeeRepo) repository).findByAccountId(accountId);//.orElseThrow(() -> DatabaseConstraintException
-//				.builder().message(String.format("Account id %s not found", accountId)).build());
+		return ((EmployeeRepo) repository).findByAccountId(accountId).orElseThrow(() -> DatabaseConstraintException.builder().message(String.format("Account id %s not found", accountId)).build());
 	}
 
 	public Role getByRoleName(String name) {
@@ -73,9 +70,7 @@ public class AbstractService<T, ID> {
 
 	public Employee login(Employee employee) {
 
-		Employee existingEmployee = ((EmployeeRepo) repository).findByAccountId(employee.getAccountId());
-//				.orElseThrow(() -> DatabaseConstraintException.builder()
-//						.message(String.format("Invalid accountId or password")).build());
+		Employee existingEmployee = ((EmployeeRepo) repository).findByAccountId(employee.getAccountId()).orElseThrow(() -> DatabaseConstraintException.builder().message(String.format("Invalid accountId or password")).build());
 
 		if (!BCrypt.checkpw(employee.getPassword(), existingEmployee.getPassword()))
 			throw DatabaseConstraintException.builder().message(String.format("Invalid accountId or password")).build();
@@ -173,7 +168,7 @@ public class AbstractService<T, ID> {
 
 	private Boolean isEmployeeAccountIdExist(String accountId) {
 
-		Employee employee = ((EmployeeRepo) repository).findByAccountId(accountId);
+		Employee employee = ((EmployeeRepo) repository).findByAccountId(accountId).orElseThrow(() -> DatabaseConstraintException.builder().message(String.format("Invalid accountId or password")).build());
 
 		if (employee != null)
 			throw DatabaseConstraintException.builder()

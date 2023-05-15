@@ -49,7 +49,7 @@ public class EmployeeService extends PosService<Employee, Long> {
 		this.repository = repository;
 	}
 	
-	public void initRole() {
+	public void initRoleAndEmployee() {
 		Role adminRole = new Role();
 		adminRole.setName("Admin");
 		
@@ -65,6 +65,7 @@ public class EmployeeService extends PosService<Employee, Long> {
 		Employee adminEmployee = new Employee();
 		adminEmployee.setAccountId("admin");
 		adminEmployee.setPassword("admin123");
+		adminEmployee.setEmail("admin123@email.com");
 		adminEmployee.setRoles(roles);
 		
 		repository.save(adminEmployee);
@@ -75,6 +76,7 @@ public class EmployeeService extends PosService<Employee, Long> {
 		Employee userEmployee = new Employee();
 		userEmployee.setAccountId("samirmustafa");
 		userEmployee.setPassword("user123");
+		userEmployee.setEmail("user123@email.com");
 		userEmployee.setRoles(roles);
 		
 		repository.save(userEmployee);

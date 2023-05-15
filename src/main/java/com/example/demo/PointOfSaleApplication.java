@@ -2,7 +2,6 @@ package com.example.demo;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.example.entity.Employee;
 import com.example.entity.Role;
-import com.example.security.SecurityConfiguration;
 import com.example.service.EmployeeService;
 import com.example.service.PosService;
 import com.example.service.RoleService;
