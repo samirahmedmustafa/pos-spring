@@ -76,7 +76,7 @@ public class ApplicationConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return username -> employeeRepo.findByAccountId(username).orElseThrow(() -> new UsernameNotFoundException("accountId " + username + " not found!"));
+		return username -> employeeRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("email " + username + " not found!"));
 	}
 	
 	@Bean
@@ -89,14 +89,14 @@ public class ApplicationConfig {
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		
-		return config.getAuthenticationManager();
+		return authenticationConfiguration.getAuthenticationManager();
 		
 	}
 	
 	@Bean
-	private PasswordEncoder passwordEncoder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	

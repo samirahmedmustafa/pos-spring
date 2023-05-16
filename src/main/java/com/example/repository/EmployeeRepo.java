@@ -8,6 +8,5 @@ import com.example.entity.Employee;
 
 public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
-	Optional<Employee> findByAccountId(String name);
-	Employee findByEmail(String email);
+	Optional<Employee> findByEmail(String email);
 }

@@ -42,6 +42,9 @@ public class EmployeeService extends PosService<Employee, Long> {
 	private final EmployeeRepo repository;
 	
 	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
 	private RoleRepo roleRepo;
 
 	public EmployeeService(EmployeeRepo repository) {
@@ -63,8 +66,8 @@ public class EmployeeService extends PosService<Employee, Long> {
 		roles.add(userRole);
 		
 		Employee adminEmployee = new Employee();
-		adminEmployee.setAccountId("admin");
-		adminEmployee.setPassword("admin123");
+		adminEmployee.setEmail("admin");
+		adminEmployee.setPassword(passwordEncoder.encode("admin123"));
 		adminEmployee.setEmail("admin123@email.com");
 		adminEmployee.setRoles(roles);
 		
@@ -74,8 +77,8 @@ public class EmployeeService extends PosService<Employee, Long> {
 		roles.add(adminRole);
 		
 		Employee userEmployee = new Employee();
-		userEmployee.setAccountId("samirmustafa");
-		userEmployee.setPassword("user123");
+		userEmployee.setEmail("samirmustafa");
+		userEmployee.setPassword(passwordEncoder.encode("user123"));
 		userEmployee.setEmail("user123@email.com");
 		userEmployee.setRoles(roles);
 		

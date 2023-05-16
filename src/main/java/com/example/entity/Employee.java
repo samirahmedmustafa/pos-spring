@@ -45,7 +45,6 @@ public class Employee implements Serializable, UserDetails {
 	private Long id;
 	private Boolean accountNonExpired;
 	@Column(unique = true)
-	private String accountId;
 	private Boolean enabled;
 	private String lastName;
 	private String firstName;
@@ -91,7 +90,7 @@ public class Employee implements Serializable, UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return accountId;
+		return email;
 	}
 	@Override
 	public boolean isAccountNonExpired() {
