@@ -63,7 +63,7 @@ public class Employee implements Serializable, UserDetails {
 	private String photo;
 	private String notes;
 	@ManyToMany
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "employees_roles", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
@@ -87,6 +87,7 @@ public class Employee implements Serializable, UserDetails {
 	    
 	    return authorities;
 	}
+	
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub

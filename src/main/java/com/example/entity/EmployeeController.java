@@ -40,7 +40,7 @@ public class EmployeeController extends PosController<Employee, Long> {
 		this.service = service;
 	}
 	
-	@PostConstruct
+//	@PostConstruct
 	public void initRolesAndEmployees() {
 		service.initRoleAndEmployee();
 	}
